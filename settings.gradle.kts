@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "pixi"
+rootProject.name = "Vk"
 include(":app")
  
