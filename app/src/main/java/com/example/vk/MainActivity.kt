@@ -9,10 +9,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.vk.ui.theme.VkTheme
 import com.example.vk.navigation.NavGraph
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val fs = Firebase.firestore
         setContent {
             VkTheme {
                 val navController = rememberNavController()
