@@ -1,0 +1,243 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ArgumentListWrapping:AppleRegistrationScreen.kt$( AppScreens.WelcomeScreen.route)</ID>
+    <ID>ArgumentListWrapping:GoogleRegistrationScreen.kt$( AppScreens.WelcomeScreen.route)</ID>
+    <ID>ArgumentListWrapping:NavGraph.kt$("first_entry/$login/$email/$password")</ID>
+    <ID>ArgumentListWrapping:NavGraph.kt$(onNavigatetoTasks = {navController.navigate("first_entry/$login/$email/$password")},login = login,email = email,password =password)</ID>
+    <ID>ArgumentListWrapping:PasswordInputField.kt$(if (passwordVisible) 24.dp else 23.57.dp, if (passwordVisible) 21.5.dp else 12.4.dp)</ID>
+    <ID>ArgumentListWrapping:VkRegistrationScreen.kt$( AppScreens.WelcomeScreen.route)</ID>
+    <ID>BlockCommentInitialStarAlignment:Theme.kt$/* Other default colors to override background = Color(0xFFFFFBFE), surface = Color(0xFFFFFBFE), onPrimary = Color.White, onSecondary = Color.White, onTertiary = Color.White, onBackground = Color(0xFF1C1B1F), onSurface = Color(0xFF1C1B1F), */</ID>
+    <ID>BlockCommentInitialStarAlignment:Type.kt$/* Other default text styles to override titleLarge = TextStyle( fontFamily = FontFamily.Default, fontWeight = FontWeight.Normal, fontSize = 22.sp, lineHeight = 28.sp, letterSpacing = 0.sp ), labelSmall = TextStyle( fontFamily = FontFamily.Default, fontWeight = FontWeight.Medium, fontSize = 11.sp, lineHeight = 16.sp, letterSpacing = 0.5.sp ) */</ID>
+    <ID>FinalNewline:AppScreens.kt$com.example.vk.navigation.AppScreens.kt</ID>
+    <ID>FinalNewline:AppleRegistrationScreen.kt$com.example.vk.ui.registration.AppleRegistrationScreen.kt</ID>
+    <ID>FinalNewline:AppleSignInButton.kt$com.example.vk.ui.components.buttons.AppleSignInButton.kt</ID>
+    <ID>FinalNewline:Color.kt$com.example.pixi.ui.theme.Color.kt</ID>
+    <ID>FinalNewline:Color.kt$com.example.vk.ui.theme.Color.kt</ID>
+    <ID>FinalNewline:ContinueButton.kt$com.example.vk.ui.components.buttons.ContinueButton.kt</ID>
+    <ID>FinalNewline:EmailRegistrationScreen.kt$com.example.vk.ui.registration.EmailRegistrationScreen.kt</ID>
+    <ID>FinalNewline:EmailSignInButton.kt$com.example.vk.ui.components.buttons.EmailSignInButton.kt</ID>
+    <ID>FinalNewline:ExampleUnitTest.kt$com.example.pixi.ExampleUnitTest.kt</ID>
+    <ID>FinalNewline:ExampleUnitTest.kt$com.example.vk.ExampleUnitTest.kt</ID>
+    <ID>FinalNewline:FirstEntryScreen.kt$com.example.vk.ui.main.FirstEntryScreen.kt</ID>
+    <ID>FinalNewline:GoogleRegistrationScreen.kt$com.example.vk.ui.registration.GoogleRegistrationScreen.kt</ID>
+    <ID>FinalNewline:GoogleSignInButton.kt$com.example.vk.ui.components.buttons.GoogleSignInButton.kt</ID>
+    <ID>FinalNewline:InputField.kt$com.example.vk.ui.components.fields.InputField.kt</ID>
+    <ID>FinalNewline:MainActivity.kt$com.example.pixi.MainActivity.kt</ID>
+    <ID>FinalNewline:MainActivity.kt$com.example.vk.MainActivity.kt</ID>
+    <ID>FinalNewline:PasswordInputField.kt$com.example.vk.ui.components.fields.PasswordInputField.kt</ID>
+    <ID>FinalNewline:RegistrationScreenTemplate.kt$com.example.vk.ui.components.RegistrationScreenTemplate.kt</ID>
+    <ID>FinalNewline:SettingsScreen.kt$com.example.vk.ui.settings.SettingsScreen.kt</ID>
+    <ID>FinalNewline:SignUpScreen.kt$com.example.vk.ui.signup.SignUpScreen.kt</ID>
+    <ID>FinalNewline:SkipButton.kt$com.example.vk.ui.components.buttons.SkipButton.kt</ID>
+    <ID>FinalNewline:TaskControl.kt$com.example.vk.datacontrol.TaskControl.kt</ID>
+    <ID>FinalNewline:TextInputField.kt$com.example.vk.ui.components.fields.TextInputField.kt</ID>
+    <ID>FinalNewline:Theme.kt$com.example.pixi.ui.theme.Theme.kt</ID>
+    <ID>FinalNewline:Theme.kt$com.example.vk.ui.theme.Theme.kt</ID>
+    <ID>FinalNewline:Type.kt$com.example.pixi.ui.theme.Type.kt</ID>
+    <ID>FinalNewline:Type.kt$com.example.vk.ui.theme.Type.kt</ID>
+    <ID>FinalNewline:VkRegistrationScreen.kt$com.example.vk.ui.registration.VkRegistrationScreen.kt</ID>
+    <ID>FinalNewline:VkSignInButton.kt$com.example.vk.ui.components.buttons.VkSignInButton.kt</ID>
+    <ID>FinalNewline:WelcomeScreen.kt$com.example.vk.ui.welcome.WelcomeScreen.kt</ID>
+    <ID>FunctionNaming:AppleRegistrationScreen.kt$@Composable fun AppleRegistrationScreen(navController: NavController)</ID>
+    <ID>FunctionNaming:AppleSignInButton.kt$@Composable fun AppleSignInButton( modifier: Modifier = Modifier, onClick: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:BottomBar.kt$@Composable fun BottomBar( onNavigatetoSettings: () -&gt; Unit = {}, onNavigatetoTasks: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:ContinueButton.kt$@Composable fun ContinueButton( modifier: Modifier = Modifier, onClick: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:EmailRegistrationScreen.kt$@Composable fun EmailRegistrationScreen(navController: NavController)</ID>
+    <ID>FunctionNaming:EmailSignInButton.kt$@Composable fun EmailSignInButton( modifier: Modifier = Modifier, onClick: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:FirstEntryScreen.kt$@Composable fun FirstEntryScreen(vm: TaskViewModel, onNavigatetoSettings: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:FirstEntryScreen.kt$@Composable fun TaskItem(task:Task)</ID>
+    <ID>FunctionNaming:GoogleRegistrationScreen.kt$@Composable fun GoogleRegistrationScreen(navController: NavController)</ID>
+    <ID>FunctionNaming:GoogleSignInButton.kt$@Composable fun GoogleSignInButton( modifier: Modifier = Modifier, onClick: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:InputField.kt$@Composable fun InputField( modifier: Modifier = Modifier, placeholder: String = "" )</ID>
+    <ID>FunctionNaming:MainActivity.kt$@Composable fun Greeting(name: String, modifier: Modifier = Modifier)</ID>
+    <ID>FunctionNaming:MainActivity.kt$@Preview(showBackground = true) @Composable fun GreetingPreview()</ID>
+    <ID>FunctionNaming:MainActivity.kt$@Preview(showBackground = true) @Composable fun SignUpPreview()</ID>
+    <ID>FunctionNaming:NavGraph.kt$@Composable fun NavGraph(navController: NavHostController)</ID>
+    <ID>FunctionNaming:PasswordInputField.kt$@Composable fun PasswordInputField( modifier: Modifier = Modifier, placeholder: String = "", value: String = "", borderColor: Color = OrangePrimary, onValueChange: (String) -&gt; Unit = {}, passwordVisible:Boolean = false, onclickpass: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:RegistrationScreenTemplate.kt$@Composable fun RegistrationScreenTemplate( logoResId: Int, onContinueClick: () -&gt; Unit )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable fun SettingsPart(text:String)</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable fun SettingsScreen(login: String? = "", email: String?="", password: String?="", onNavigatetoTasks: () -&gt; Unit = {})</ID>
+    <ID>FunctionNaming:SignUpScreen.kt$@Composable fun SignUpScreen( modifier: Modifier = Modifier, onNavigateToApple: () -&gt; Unit = {}, onNavigateToGoogle: () -&gt; Unit = {}, onNavigateToVk: () -&gt; Unit = {}, onNavigateToEmail: () -&gt; Unit = {}, onSignInClick: () -&gt; Unit = {}, onSkipClick: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:SignUpScreen.kt$@Preview(showBackground = true) @Composable fun SignUpScreenPreview()</ID>
+    <ID>FunctionNaming:SkipButton.kt$@Composable fun SkipButton( modifier: Modifier = Modifier, onClick: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:TextInputField.kt$@Composable fun TextInputField( modifier: Modifier = Modifier, placeholder: String = "", value: String = "", onValueChange: (String) -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:Theme.kt$@Composable fun PixiTheme( darkTheme: Boolean = isSystemInDarkTheme(), // Dynamic color is available on Android 12+ dynamicColor: Boolean = true, content: @Composable () -&gt; Unit )</ID>
+    <ID>FunctionNaming:Theme.kt$@Composable fun VkTheme( darkTheme: Boolean = isSystemInDarkTheme(), // Dynamic color is available on Android 12+ dynamicColor: Boolean = true, content: @Composable () -&gt; Unit )</ID>
+    <ID>FunctionNaming:VkRegistrationScreen.kt$@Composable fun VkRegistrationScreen(navController: NavController)</ID>
+    <ID>FunctionNaming:VkSignInButton.kt$@Composable fun VkSignInButton( modifier: Modifier = Modifier, onClick: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:WelcomeScreen.kt$@Composable fun WelcomeScreen(navController: NavController,login: String? = "", email: String?="", password: String?="")</ID>
+    <ID>FunctionStartOfBodySpacing:FirstEntryScreen.kt$@Composable fun TaskItem(task:Task)</ID>
+    <ID>FunctionStartOfBodySpacing:SettingsScreen.kt$@Composable fun SettingsPart(text:String)</ID>
+    <ID>FunctionStartOfBodySpacing:SettingsScreen.kt$@Composable fun SettingsScreen(login: String? = "", email: String?="", password: String?="", onNavigatetoTasks: () -&gt; Unit = {})</ID>
+    <ID>FunctionStartOfBodySpacing:TaskControl.kt$TasksRepository$suspend fun loadTasks(): List&lt;Task&gt;</ID>
+    <ID>ImportOrdering:ExampleUnitTest.kt$import org.junit.Test import org.junit.Assert.*</ID>
+    <ID>ImportOrdering:FirstEntryScreen.kt$import android.content.res.Configuration import androidx.compose.foundation.Image import androidx.compose.foundation.background import androidx.compose.foundation.border import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Box import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.Row import androidx.compose.foundation.layout.Spacer import androidx.compose.foundation.layout.fillMaxHeight import androidx.compose.foundation.layout.fillMaxSize import androidx.compose.foundation.layout.fillMaxWidth import androidx.compose.foundation.layout.height import androidx.compose.foundation.layout.size import androidx.compose.foundation.layout.width import androidx.compose.foundation.lazy.LazyColumn import androidx.compose.foundation.lazy.items import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.material3.CircularProgressIndicator import androidx.compose.material3.Icon import androidx.compose.material3.Text import androidx.compose.runtime.Composable import androidx.compose.runtime.LaunchedEffect import androidx.compose.runtime.collectAsState import androidx.compose.runtime.getValue import androidx.compose.runtime.mutableStateOf import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout import androidx.compose.ui.platform.LocalConfiguration import androidx.compose.ui.res.colorResource import androidx.compose.ui.res.painterResource import androidx.compose.ui.res.stringResource import androidx.compose.ui.tooling.preview.Preview import androidx.compose.ui.unit.dp import androidx.compose.ui.unit.sp import androidx.lifecycle.ViewModel import androidx.lifecycle.viewModelScope import androidx.lifecycle.viewmodel.compose.viewModel import com.example.vk.R import com.example.vk.ui.components.bars.BottomBar import com.example.vk.ui.theme.SignupBackground import com.example.vk.datacontrol.Task import com.example.vk.datacontrol.TasksRepository import com.example.vk.ui.theme.OrangePrimary import kotlinx.coroutines.flow.MutableStateFlow import kotlinx.coroutines.flow.StateFlow import kotlinx.coroutines.launch</ID>
+    <ID>ImportOrdering:MainActivity.kt$import android.os.Bundle import androidx.activity.ComponentActivity import androidx.activity.compose.setContent import androidx.activity.enableEdgeToEdge import androidx.compose.runtime.Composable import androidx.compose.ui.tooling.preview.Preview import androidx.navigation.compose.rememberNavController import com.example.vk.ui.theme.VkTheme import com.example.vk.navigation.NavGraph</ID>
+    <ID>ImportOrdering:NavGraph.kt$import androidx.compose.runtime.Composable import androidx.compose.ui.platform.LocalContext import androidx.lifecycle.viewmodel.compose.viewModel import androidx.navigation.NavHostController import androidx.navigation.compose.NavHost import androidx.navigation.compose.composable import com.example.vk.datacontrol.TasksRepository import com.example.vk.ui.main.FirstEntryScreen import com.example.vk.ui.main.TaskViewModel import com.example.vk.ui.registration.AppleRegistrationScreen import com.example.vk.ui.registration.EmailRegistrationScreen import com.example.vk.ui.registration.GoogleRegistrationScreen import com.example.vk.ui.registration.VkRegistrationScreen import com.example.vk.ui.signup.SignUpScreen import com.example.vk.ui.welcome.WelcomeScreen import com.example.vk.ui.settings.SettingsScreen import android.util.Log</ID>
+    <ID>ImportOrdering:SignUpScreen.kt$import android.widget.Toast import androidx.compose.foundation.Image import androidx.compose.foundation.background import androidx.compose.foundation.clickable import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.Spacer import androidx.compose.foundation.layout.fillMaxSize import androidx.compose.foundation.layout.fillMaxWidth import androidx.compose.foundation.layout.height import androidx.compose.foundation.layout.padding import androidx.compose.foundation.layout.size import androidx.compose.material3.Text import androidx.compose.runtime.Composable import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.platform.LocalContext import androidx.compose.ui.res.painterResource import androidx.compose.ui.text.font.FontWeight import androidx.compose.ui.text.style.TextDecoration import androidx.compose.ui.tooling.preview.Preview import androidx.compose.ui.unit.dp import androidx.compose.ui.unit.sp import com.example.vk.R import com.example.vk.ui.components.buttons.AppleSignInButton import com.example.vk.ui.components.buttons.EmailSignInButton import com.example.vk.ui.components.buttons.GoogleSignInButton import com.example.vk.ui.components.buttons.SkipButton import com.example.vk.ui.components.buttons.VkSignInButton import com.example.vk.ui.theme.BrownText import com.example.vk.ui.theme.VkTheme import com.example.vk.ui.theme.SignupBackground</ID>
+    <ID>ImportOrdering:WelcomeScreen.kt$import android.widget.Toast import androidx.compose.foundation.Image import androidx.compose.foundation.background import androidx.compose.foundation.border import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Box import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.Spacer import androidx.compose.foundation.layout.fillMaxSize import androidx.compose.foundation.layout.height import androidx.compose.foundation.layout.padding import androidx.compose.foundation.layout.size import androidx.compose.foundation.layout.width import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.material3.Text import androidx.compose.runtime.Composable import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.graphics.Color import androidx.compose.ui.platform.LocalContext import androidx.compose.ui.res.painterResource import androidx.compose.ui.text.SpanStyle import androidx.compose.ui.text.buildAnnotatedString import androidx.compose.ui.text.font.FontWeight import androidx.compose.ui.text.style.LineHeightStyle import androidx.compose.ui.text.withStyle import androidx.compose.ui.unit.dp import androidx.compose.ui.unit.sp import androidx.navigation.NavController import com.example.vk.R import com.example.vk.navigation.AppScreens import com.example.vk.ui.components.buttons.ContinueButton import com.example.vk.ui.theme.AppTextColor import com.example.vk.ui.theme.Error import com.example.vk.ui.theme.OrangePrimary import com.example.vk.ui.theme.SignupBackground import android.util.Log</ID>
+    <ID>Indentation:FirstEntryScreen.kt$ </ID>
+    <ID>LongMethod:EmailRegistrationScreen.kt$@Composable fun EmailRegistrationScreen(navController: NavController)</ID>
+    <ID>LongMethod:FirstEntryScreen.kt$@Composable fun FirstEntryScreen(vm: TaskViewModel, onNavigatetoSettings: () -&gt; Unit = {} )</ID>
+    <ID>LongMethod:NavGraph.kt$@Composable fun NavGraph(navController: NavHostController)</ID>
+    <ID>LongMethod:SettingsScreen.kt$@Composable fun SettingsScreen(login: String? = "", email: String?="", password: String?="", onNavigatetoTasks: () -&gt; Unit = {})</ID>
+    <ID>LongMethod:SignUpScreen.kt$@Composable fun SignUpScreen( modifier: Modifier = Modifier, onNavigateToApple: () -&gt; Unit = {}, onNavigateToGoogle: () -&gt; Unit = {}, onNavigateToVk: () -&gt; Unit = {}, onNavigateToEmail: () -&gt; Unit = {}, onSignInClick: () -&gt; Unit = {}, onSkipClick: () -&gt; Unit = {} )</ID>
+    <ID>LongMethod:WelcomeScreen.kt$@Composable fun WelcomeScreen(navController: NavController,login: String? = "", email: String?="", password: String?="")</ID>
+    <ID>LongParameterList:PasswordInputField.kt$( modifier: Modifier = Modifier, placeholder: String = "", value: String = "", borderColor: Color = OrangePrimary, onValueChange: (String) -&gt; Unit = {}, passwordVisible:Boolean = false, onclickpass: () -&gt; Unit = {} )</ID>
+    <ID>LongParameterList:SignUpScreen.kt$( modifier: Modifier = Modifier, onNavigateToApple: () -&gt; Unit = {}, onNavigateToGoogle: () -&gt; Unit = {}, onNavigateToVk: () -&gt; Unit = {}, onNavigateToEmail: () -&gt; Unit = {}, onSignInClick: () -&gt; Unit = {}, onSkipClick: () -&gt; Unit = {} )</ID>
+    <ID>MagicNumber:Color.kt$0xFF5B3A02</ID>
+    <ID>MagicNumber:Color.kt$0xFF5B3A20</ID>
+    <ID>MagicNumber:Color.kt$0xFF625b71</ID>
+    <ID>MagicNumber:Color.kt$0xFF6650a4</ID>
+    <ID>MagicNumber:Color.kt$0xFF7D5260</ID>
+    <ID>MagicNumber:Color.kt$0xFFCCC2DC</ID>
+    <ID>MagicNumber:Color.kt$0xFFD0BCFF</ID>
+    <ID>MagicNumber:Color.kt$0xFFEFB8C8</ID>
+    <ID>MagicNumber:Color.kt$0xFFFA5300</ID>
+    <ID>MagicNumber:Color.kt$0xFFFFA100</ID>
+    <ID>MagicNumber:Color.kt$0xFFFFB700</ID>
+    <ID>MagicNumber:Color.kt$0xFFFFFAF3</ID>
+    <ID>MagicNumber:PasswordInputField.kt$0xFFC2A17E</ID>
+    <ID>MagicNumber:SettingsScreen.kt$0.3f</ID>
+    <ID>MagicNumber:SettingsScreen.kt$0.7f</ID>
+    <ID>MagicNumber:TaskControl.kt$TasksRepository$2000</ID>
+    <ID>MagicNumber:TextInputField.kt$0xFFC2A17E</ID>
+    <ID>MatchingDeclarationName:PasswordInputField.kt$PasswordVisualTransformation : VisualTransformation</ID>
+    <ID>MaxLineLength:NavGraph.kt$SettingsScreen(onNavigatetoTasks = {navController.navigate("first_entry/$login/$email/$password")},login = login,email = email,password =password)</ID>
+    <ID>MaxLineLength:PasswordInputField.kt$modifier = Modifier.size(if (passwordVisible) 24.dp else 23.57.dp, if (passwordVisible) 21.5.dp else 12.4.dp)</ID>
+    <ID>MaximumLineLength:NavGraph.kt$ </ID>
+    <ID>MaximumLineLength:PasswordInputField.kt$ </ID>
+    <ID>NewLineAtEndOfFile:AppScreens.kt$com.example.vk.navigation.AppScreens.kt</ID>
+    <ID>NewLineAtEndOfFile:AppleRegistrationScreen.kt$com.example.vk.ui.registration.AppleRegistrationScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:AppleSignInButton.kt$com.example.vk.ui.components.buttons.AppleSignInButton.kt</ID>
+    <ID>NewLineAtEndOfFile:Color.kt$com.example.pixi.ui.theme.Color.kt</ID>
+    <ID>NewLineAtEndOfFile:Color.kt$com.example.vk.ui.theme.Color.kt</ID>
+    <ID>NewLineAtEndOfFile:ContinueButton.kt$com.example.vk.ui.components.buttons.ContinueButton.kt</ID>
+    <ID>NewLineAtEndOfFile:EmailRegistrationScreen.kt$com.example.vk.ui.registration.EmailRegistrationScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:EmailSignInButton.kt$com.example.vk.ui.components.buttons.EmailSignInButton.kt</ID>
+    <ID>NewLineAtEndOfFile:ExampleUnitTest.kt$com.example.pixi.ExampleUnitTest.kt</ID>
+    <ID>NewLineAtEndOfFile:ExampleUnitTest.kt$com.example.vk.ExampleUnitTest.kt</ID>
+    <ID>NewLineAtEndOfFile:FirstEntryScreen.kt$com.example.vk.ui.main.FirstEntryScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:GoogleRegistrationScreen.kt$com.example.vk.ui.registration.GoogleRegistrationScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:GoogleSignInButton.kt$com.example.vk.ui.components.buttons.GoogleSignInButton.kt</ID>
+    <ID>NewLineAtEndOfFile:InputField.kt$com.example.vk.ui.components.fields.InputField.kt</ID>
+    <ID>NewLineAtEndOfFile:MainActivity.kt$com.example.pixi.MainActivity.kt</ID>
+    <ID>NewLineAtEndOfFile:MainActivity.kt$com.example.vk.MainActivity.kt</ID>
+    <ID>NewLineAtEndOfFile:PasswordInputField.kt$com.example.vk.ui.components.fields.PasswordInputField.kt</ID>
+    <ID>NewLineAtEndOfFile:RegistrationScreenTemplate.kt$com.example.vk.ui.components.RegistrationScreenTemplate.kt</ID>
+    <ID>NewLineAtEndOfFile:SettingsScreen.kt$com.example.vk.ui.settings.SettingsScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:SignUpScreen.kt$com.example.vk.ui.signup.SignUpScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:SkipButton.kt$com.example.vk.ui.components.buttons.SkipButton.kt</ID>
+    <ID>NewLineAtEndOfFile:TaskControl.kt$com.example.vk.datacontrol.TaskControl.kt</ID>
+    <ID>NewLineAtEndOfFile:TextInputField.kt$com.example.vk.ui.components.fields.TextInputField.kt</ID>
+    <ID>NewLineAtEndOfFile:Theme.kt$com.example.pixi.ui.theme.Theme.kt</ID>
+    <ID>NewLineAtEndOfFile:Theme.kt$com.example.vk.ui.theme.Theme.kt</ID>
+    <ID>NewLineAtEndOfFile:Type.kt$com.example.pixi.ui.theme.Type.kt</ID>
+    <ID>NewLineAtEndOfFile:Type.kt$com.example.vk.ui.theme.Type.kt</ID>
+    <ID>NewLineAtEndOfFile:VkRegistrationScreen.kt$com.example.vk.ui.registration.VkRegistrationScreen.kt</ID>
+    <ID>NewLineAtEndOfFile:VkSignInButton.kt$com.example.vk.ui.components.buttons.VkSignInButton.kt</ID>
+    <ID>NewLineAtEndOfFile:WelcomeScreen.kt$com.example.vk.ui.welcome.WelcomeScreen.kt</ID>
+    <ID>NoBlankLineBeforeRbrace:AppScreens.kt$AppScreens$ </ID>
+    <ID>NoBlankLineBeforeRbrace:AppleRegistrationScreen.kt$ </ID>
+    <ID>NoBlankLineBeforeRbrace:EmailRegistrationScreen.kt$ </ID>
+    <ID>NoBlankLineBeforeRbrace:FirstEntryScreen.kt$ </ID>
+    <ID>NoBlankLineBeforeRbrace:FirstEntryScreen.kt$TaskViewModel$ </ID>
+    <ID>NoBlankLineBeforeRbrace:GoogleRegistrationScreen.kt$ </ID>
+    <ID>NoBlankLineBeforeRbrace:SettingsScreen.kt$ </ID>
+    <ID>NoBlankLineBeforeRbrace:TaskControl.kt$TasksRepository$ </ID>
+    <ID>NoBlankLineBeforeRbrace:WelcomeScreen.kt$ </ID>
+    <ID>NoConsecutiveBlankLines:AppScreens.kt$AppScreens$ </ID>
+    <ID>NoConsecutiveBlankLines:Color.kt$ </ID>
+    <ID>NoConsecutiveBlankLines:EmailRegistrationScreen.kt$ </ID>
+    <ID>NoConsecutiveBlankLines:FirstEntryScreen.kt$ </ID>
+    <ID>NoConsecutiveBlankLines:NavGraph.kt$ </ID>
+    <ID>NoConsecutiveBlankLines:PasswordInputField.kt$ </ID>
+    <ID>NoConsecutiveBlankLines:SettingsScreen.kt$ </ID>
+    <ID>NoConsecutiveBlankLines:SignUpScreen.kt$ </ID>
+    <ID>NoConsecutiveBlankLines:TaskControl.kt$TasksRepository$ </ID>
+    <ID>NoConsecutiveBlankLines:WelcomeScreen.kt$ </ID>
+    <ID>NoEmptyFirstLineInMethodBlock:BottomBar.kt$ </ID>
+    <ID>NoEmptyFirstLineInMethodBlock:FirstEntryScreen.kt$ </ID>
+    <ID>NoEmptyFirstLineInMethodBlock:NavGraph.kt$ </ID>
+    <ID>NoEmptyFirstLineInMethodBlock:PasswordInputField.kt$ </ID>
+    <ID>NoEmptyFirstLineInMethodBlock:WelcomeScreen.kt$ </ID>
+    <ID>NoTrailingSpaces:EmailRegistrationScreen.kt$ </ID>
+    <ID>NoTrailingSpaces:PasswordInputField.kt$ </ID>
+    <ID>NoUnusedImports:AppleSignInButton.kt$com.example.vk.ui.components.buttons.AppleSignInButton.kt</ID>
+    <ID>NoUnusedImports:ContinueButton.kt$com.example.vk.ui.components.buttons.ContinueButton.kt</ID>
+    <ID>NoUnusedImports:EmailRegistrationScreen.kt$com.example.vk.ui.registration.EmailRegistrationScreen.kt</ID>
+    <ID>NoUnusedImports:EmailSignInButton.kt$com.example.vk.ui.components.buttons.EmailSignInButton.kt</ID>
+    <ID>NoUnusedImports:FirstEntryScreen.kt$com.example.vk.ui.main.FirstEntryScreen.kt</ID>
+    <ID>NoUnusedImports:GoogleSignInButton.kt$com.example.vk.ui.components.buttons.GoogleSignInButton.kt</ID>
+    <ID>NoUnusedImports:InputField.kt$com.example.vk.ui.components.fields.InputField.kt</ID>
+    <ID>NoUnusedImports:NavGraph.kt$com.example.vk.navigation.NavGraph.kt</ID>
+    <ID>NoUnusedImports:PasswordInputField.kt$com.example.vk.ui.components.fields.PasswordInputField.kt</ID>
+    <ID>NoUnusedImports:RegistrationScreenTemplate.kt$com.example.vk.ui.components.RegistrationScreenTemplate.kt</ID>
+    <ID>NoUnusedImports:SkipButton.kt$com.example.vk.ui.components.buttons.SkipButton.kt</ID>
+    <ID>NoUnusedImports:TaskControl.kt$com.example.vk.datacontrol.TaskControl.kt</ID>
+    <ID>NoUnusedImports:Theme.kt$com.example.pixi.ui.theme.Theme.kt</ID>
+    <ID>NoUnusedImports:Theme.kt$com.example.vk.ui.theme.Theme.kt</ID>
+    <ID>NoUnusedImports:VkSignInButton.kt$com.example.vk.ui.components.buttons.VkSignInButton.kt</ID>
+    <ID>NoUnusedImports:WelcomeScreen.kt$com.example.vk.ui.welcome.WelcomeScreen.kt</ID>
+    <ID>NoWildcardImports:ExampleUnitTest.kt$import org.junit.Assert.*</ID>
+    <ID>ParameterListWrapping:FirstEntryScreen.kt$(vm: TaskViewModel, onNavigatetoSettings: () -&gt; Unit = {} )</ID>
+    <ID>SpacingAroundColon:FirstEntryScreen.kt$:</ID>
+    <ID>SpacingAroundColon:FirstEntryScreen.kt$TaskViewModel$:</ID>
+    <ID>SpacingAroundColon:PasswordInputField.kt$:</ID>
+    <ID>SpacingAroundColon:SettingsScreen.kt$:</ID>
+    <ID>SpacingAroundColon:TaskControl.kt$Task$:</ID>
+    <ID>SpacingAroundComma:FirstEntryScreen.kt$,</ID>
+    <ID>SpacingAroundComma:NavGraph.kt$,</ID>
+    <ID>SpacingAroundComma:SettingsScreen.kt$,</ID>
+    <ID>SpacingAroundComma:WelcomeScreen.kt$,</ID>
+    <ID>SpacingAroundCurly:AppScreens.kt$AppScreens${</ID>
+    <ID>SpacingAroundCurly:BottomBar.kt${</ID>
+    <ID>SpacingAroundCurly:BottomBar.kt$}</ID>
+    <ID>SpacingAroundCurly:EmailRegistrationScreen.kt${</ID>
+    <ID>SpacingAroundCurly:EmailRegistrationScreen.kt$}</ID>
+    <ID>SpacingAroundCurly:FirstEntryScreen.kt$TaskViewModel${</ID>
+    <ID>SpacingAroundCurly:FirstEntryScreen.kt${</ID>
+    <ID>SpacingAroundCurly:FirstEntryScreen.kt$}</ID>
+    <ID>SpacingAroundCurly:NavGraph.kt${</ID>
+    <ID>SpacingAroundCurly:NavGraph.kt$}</ID>
+    <ID>SpacingAroundCurly:PasswordInputField.kt${</ID>
+    <ID>SpacingAroundCurly:PasswordInputField.kt$}</ID>
+    <ID>SpacingAroundCurly:SettingsScreen.kt${</ID>
+    <ID>SpacingAroundCurly:SettingsScreen.kt$}</ID>
+    <ID>SpacingAroundCurly:TaskControl.kt$TasksRepository${</ID>
+    <ID>SpacingAroundKeyword:FirstEntryScreen.kt$TaskViewModel$catch</ID>
+    <ID>SpacingAroundKeyword:FirstEntryScreen.kt$TaskViewModel$else</ID>
+    <ID>SpacingAroundKeyword:FirstEntryScreen.kt$TaskViewModel$try</ID>
+    <ID>SpacingAroundKeyword:FirstEntryScreen.kt$else</ID>
+    <ID>SpacingAroundKeyword:FirstEntryScreen.kt$if</ID>
+    <ID>SpacingAroundKeyword:FirstEntryScreen.kt$when</ID>
+    <ID>SpacingAroundKeyword:SettingsScreen.kt$else</ID>
+    <ID>SpacingAroundKeyword:SettingsScreen.kt$if</ID>
+    <ID>SpacingAroundOperators:BottomBar.kt$=</ID>
+    <ID>SpacingAroundOperators:EmailRegistrationScreen.kt$=</ID>
+    <ID>SpacingAroundOperators:FirstEntryScreen.kt$-&gt;</ID>
+    <ID>SpacingAroundOperators:FirstEntryScreen.kt$=</ID>
+    <ID>SpacingAroundOperators:NavGraph.kt$=</ID>
+    <ID>SpacingAroundOperators:SettingsScreen.kt$=</ID>
+    <ID>SpacingAroundOperators:WelcomeScreen.kt$=</ID>
+    <ID>SpacingAroundParens:FirstEntryScreen.kt$(</ID>
+    <ID>SpacingAroundParens:FirstEntryScreen.kt$TaskViewModel$(</ID>
+    <ID>SpacingBetweenDeclarationsWithAnnotations:FirstEntryScreen.kt$@Composable fun TaskItem(task:Task)</ID>
+    <ID>SpacingBetweenDeclarationsWithAnnotations:SettingsScreen.kt$@Composable fun SettingsScreen(login: String? = "", email: String?="", password: String?="", onNavigatetoTasks: () -&gt; Unit = {})</ID>
+    <ID>SwallowedException:FirstEntryScreen.kt$TaskViewModel$e: Exception</ID>
+    <ID>SwallowedException:TaskControl.kt$TasksRepository$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:FirstEntryScreen.kt$TaskViewModel$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:TaskControl.kt$TasksRepository$e: Exception</ID>
+    <ID>UnnecessaryParenthesesBeforeTrailingLambda:FirstEntryScreen.kt$()</ID>
+    <ID>UnusedPrivateProperty:PasswordInputField.kt$PasswordVisualTransformation$private val mask: Char = '*'</ID>
+    <ID>UnusedPrivateProperty:WelcomeScreen.kt$val context = LocalContext.current</ID>
+    <ID>WildcardImport:ExampleUnitTest.kt$import org.junit.Assert.*</ID>
+    <ID>Wrapping:AppleRegistrationScreen.kt$(</ID>
+    <ID>Wrapping:FirstEntryScreen.kt$(</ID>
+    <ID>Wrapping:GoogleRegistrationScreen.kt$(</ID>
+    <ID>Wrapping:NavGraph.kt$navController.navigate("first_entry/$login/$email/$password")</ID>
+    <ID>Wrapping:VkRegistrationScreen.kt$(</ID>
+  </CurrentIssues>
+</SmellBaseline>
