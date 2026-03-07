@@ -16,7 +16,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val fs = Firebase.firestore
         setContent {
             VkTheme {
                 val navController = rememberNavController()

@@ -17,11 +17,26 @@ import com.example.vk.ui.signup.SignUpScreen
 import com.example.vk.ui.welcome.WelcomeScreen
 import com.example.vk.ui.settings.SettingsScreen
 import android.util.Log
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import com.example.vk.datacontrol.AuthState
+import com.example.vk.datacontrol.AuthViewModel
+import com.example.vk.ui.registration.SignInEmailScreen
+
 @Composable
 fun NavGraph(navController: NavHostController) {
+    val authvm: AuthViewModel = viewModel(
+        initializer = { AuthViewModel()}
+    )
+
+    val authState by authvm.authState.collectAsState()
+    val startDestination = when (authState) {
+        is AuthState.Authenticated -> AppScreens.FirstEntryScreen.route
+        AuthState.Unauthenticated -> AppScreens.SignUpScreen.route
+    }
     NavHost(
         navController = navController,
-        startDestination = AppScreens.SignUpScreen.route
+        startDestination = startDestination
     ) {
 
         composable(route = AppScreens.SignUpScreen.route) {
@@ -41,8 +56,16 @@ fun NavGraph(navController: NavHostController) {
                 },
                 onSkipClick = {
                     navController.navigate(AppScreens.WelcomeScreen.route)
+                },
+                onSignInClick= {
+                    navController.navigate(AppScreens.SignInEmailScreen.route)
                 }
             )
+        }
+        composable(route = AppScreens.SignInEmailScreen.route) {
+            SignInEmailScreen(navController = navController,onNavigateToEmail ={
+                navController.navigate(AppScreens.EmailRegistrationScreen.route)
+            },authvm=authvm)
         }
 
         composable(route = AppScreens.AppleRegistrationScreen.route) {
@@ -58,7 +81,9 @@ fun NavGraph(navController: NavHostController) {
         }
 
         composable(route = AppScreens.EmailRegistrationScreen.route) {
-            EmailRegistrationScreen(navController = navController)
+            EmailRegistrationScreen(navController = navController, onSignInClick = {
+                navController.navigate(AppScreens.SignInEmailScreen.route)
+            },authvm=authvm)
         }
 
         composable(route = AppScreens.WelcomeScreen.route) {
