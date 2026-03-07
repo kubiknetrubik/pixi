@@ -13,11 +13,16 @@ class AuthViewModel : ViewModel() {
     private val _authState = MutableStateFlow<AuthState>(AuthState.Unauthenticated)
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage
+
     init{
         auth.addAuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
+            val currentFlag = if (_authState.value is AuthState.Authenticated) {
+                (_authState.value as AuthState.Authenticated).isJustRegistered
+            } else false
+
             _authState.value = if (user != null) {
-                AuthState.Authenticated
+                AuthState.Authenticated(isJustRegistered = currentFlag)
             } else {
                 AuthState.Unauthenticated
             }
@@ -29,6 +34,7 @@ class AuthViewModel : ViewModel() {
             .addOnCompleteListener {
                 if(it.isSuccessful){
                     Log.d("Log","success sign in")
+                    _authState.value = AuthState.Authenticated(isJustRegistered = false)
                     _errorMessage.value=null
                 }else{
                     Log.d("Log","fail sihn in")
@@ -41,18 +47,27 @@ class AuthViewModel : ViewModel() {
             .addOnCompleteListener {
                 if(it.isSuccessful){
                     Log.d("Log","success")
+                    _authState.value = AuthState.Authenticated(isJustRegistered = true)
+                    _errorMessage.value=null
                 }else{
                     Log.d("Log","fail")
+                    _errorMessage.value="Неподходящие данные"
                 }
             }
     }
     fun signOut() {
         auth.signOut()
     }
+    fun clearError() {
+        _errorMessage.value = null
+    }
+    fun clearJustRegistered() {
+        _authState.value = AuthState.Authenticated(isJustRegistered = false)
+    }
 
 
 }
 sealed class AuthState {
     object Unauthenticated : AuthState()
-    object Authenticated: AuthState()
+    data class Authenticated(val isJustRegistered: Boolean = false) : AuthState()
 }

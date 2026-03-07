@@ -56,6 +56,7 @@ fun SignInEmailScreen(navController: NavController, onNavigateToEmail: () -> Uni
         errorMessage?.let {
             Toast.makeText(context, it, Toast.LENGTH_LONG).show()
         }
+        authvm.clearError()
     }
     Column(
         modifier = Modifier

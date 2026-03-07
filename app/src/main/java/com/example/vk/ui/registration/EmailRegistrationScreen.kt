@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,19 +46,24 @@ import com.google.firebase.auth.auth
 @Composable
 fun EmailRegistrationScreen(navController: NavController,onSignInClick: () -> Unit = {},authvm: AuthViewModel) {
     val context = LocalContext.current
-    val auth = Firebase.auth
     var login by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var onclick by remember { mutableStateOf(false) }
+    val errorMessage by authvm.errorMessage.collectAsState()
 
 
     val passwordsMatch = password == confirmPassword || confirmPassword.isEmpty()
     
 
     val showError = !passwordsMatch && confirmPassword.isNotEmpty()
-
+    LaunchedEffect(errorMessage) {
+        errorMessage?.let {
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+        }
+        authvm.clearError()
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -154,9 +161,9 @@ fun EmailRegistrationScreen(navController: NavController,onSignInClick: () -> Un
 
         ContinueButton(
             onClick = {
-                Toast.makeText(context, "Continue with Email clicked", Toast.LENGTH_SHORT).show()
+
                 authvm.signUp(email,password)
-                navController.navigate("welcome/$login/$email/$password")
+
 
             }
         )

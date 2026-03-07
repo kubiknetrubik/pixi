@@ -31,8 +31,14 @@ fun NavGraph(navController: NavHostController) {
 
     val authState by authvm.authState.collectAsState()
     val startDestination = when (authState) {
-        is AuthState.Authenticated -> AppScreens.FirstEntryScreen.route
-        AuthState.Unauthenticated -> AppScreens.SignUpScreen.route
+        is AuthState.Unauthenticated -> AppScreens.SignUpScreen.route
+        is AuthState.Authenticated -> {
+            if ((authState as AuthState.Authenticated).isJustRegistered) {
+                AppScreens.WelcomeScreen.route
+            } else {
+                AppScreens.FirstEntryScreen.route
+            }
+        }
     }
     NavHost(
         navController = navController,
@@ -87,7 +93,7 @@ fun NavGraph(navController: NavHostController) {
         }
 
         composable(route = AppScreens.WelcomeScreen.route) {
-            WelcomeScreen(navController = navController)
+            WelcomeScreen(navController = navController,authvm=authvm)
         }
         composable(route = AppScreens.WelcomeScreenEmail.route) {backStackEntry ->
             val login = backStackEntry.arguments?.getString("login")
@@ -95,7 +101,7 @@ fun NavGraph(navController: NavHostController) {
             val password = backStackEntry.arguments?.getString("password")
 
 
-            WelcomeScreen(navController = navController,login,email,password)
+            WelcomeScreen(navController = navController,login,email,password,authvm=authvm)
         }
         composable(route = AppScreens.FirstEntryScreen.route) {
             val context = LocalContext.current
