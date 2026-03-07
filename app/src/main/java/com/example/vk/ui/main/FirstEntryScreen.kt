@@ -120,16 +120,10 @@ fun TaskItem(task:Task){
                 .width(25.dp)
         )
 
-
-
-
     }
 
 
     Spacer(modifier = Modifier.height(10.dp))
-
-}
-
 @Composable
 fun FirstEntryScreen(vm: TaskViewModel,
 onNavigatetoSettings: () -> Unit = {}
@@ -138,18 +132,24 @@ onNavigatetoSettings: () -> Unit = {}
     val state by vm.uiState.collectAsState()
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-    if(isLandscape){
+    if (isLandscape) {
         Row(
             modifier = Modifier.fillMaxSize()
-        ){
-            Column(){
+        ) {
+            Column() {
                 Image(
                     painter = painterResource(id = R.drawable.main_fox),
                     contentDescription = null,
                     modifier = Modifier.weight(1f).fillMaxHeight()
                 )
-                BottomBar(onNavigatetoSettings=onNavigatetoSettings)
+
+                BottomBar(onNavigatetoSettings = onNavigatetoSettings)
                 Spacer(modifier = Modifier.height(16.dp))
+
+                BottomBar(onNavigatetoSettings = onNavigatetoSettings)
+                Spacer(modifier = Modifier.height(16.dp))
+
+
             }
             Spacer(modifier = Modifier.width(150.dp))
             Box(
@@ -157,26 +157,28 @@ onNavigatetoSettings: () -> Unit = {}
                     .height(500.dp)
                     .width(380.dp)
             ) {
-                when(state){
-                    is TasksState.Loading ->{
+                when (state) {
+                    is TasksState.Loading -> {
                         CircularProgressIndicator(
                             modifier = Modifier.align(Alignment.Center)
                         )
 
                     }
+
                     is TasksState.Success -> {
                         Spacer(modifier = Modifier.height(20.dp))
-                        LazyColumn (
+                        LazyColumn(
                             modifier = Modifier
                                 .height(500.dp)
                                 .width(380.dp)
-                        ){
-                            items((state as TasksState.Success).tasks){task->
-                                TaskItem(task=task)
+                        ) {
+                            items((state as TasksState.Success).tasks) { task ->
+                                TaskItem(task = task)
                             }
                         }
 
                     }
+
                     is TasksState.Error -> {
                         Text(
                             text = (state as TasksState.Error).message,
@@ -189,7 +191,7 @@ onNavigatetoSettings: () -> Unit = {}
             }
         }
 
-    }else{
+    } else {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -208,27 +210,29 @@ onNavigatetoSettings: () -> Unit = {}
                     .height(280.dp)
                     .width(380.dp)
 
-            ){
-                when(state){
-                    is TasksState.Loading ->{
+            ) {
+                when (state) {
+                    is TasksState.Loading -> {
                         CircularProgressIndicator(
                             modifier = Modifier.align(Alignment.Center)
                         )
 
                     }
+
                     is TasksState.Success -> {
                         Spacer(modifier = Modifier.height(20.dp))
-                        LazyColumn (
+                        LazyColumn(
                             modifier = Modifier
                                 .height(270.dp)
                                 .width(380.dp)
-                        ){
-                            items((state as TasksState.Success).tasks){task->
-                                TaskItem(task=task)
+                        ) {
+                            items((state as TasksState.Success).tasks) { task ->
+                                TaskItem(task = task)
                             }
                         }
 
                     }
+
                     is TasksState.Error -> {
                         Text(
                             text = (state as TasksState.Error).message,
@@ -242,8 +246,12 @@ onNavigatetoSettings: () -> Unit = {}
 
             }
 
-            BottomBar(onNavigatetoSettings=onNavigatetoSettings)
+            BottomBar(onNavigatetoSettings = onNavigatetoSettings)
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
+    }
+
+/*
+ */

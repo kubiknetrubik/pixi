@@ -64,17 +64,26 @@ fun NavGraph(navController: NavHostController) {
         composable(route = AppScreens.WelcomeScreen.route) {
             WelcomeScreen(navController = navController)
         }
+<<<<<<< HEAD
         composable(route = AppScreens.WelcomeScreenEmail.route) {backStackEntry ->
+=======
+        composable(route = AppScreens.WelcomeScreenEmail.route) { backStackEntry ->
+>>>>>>> master
             val login = backStackEntry.arguments?.getString("login")
             val email = backStackEntry.arguments?.getString("email")
             val password = backStackEntry.arguments?.getString("password")
 
 
+<<<<<<< HEAD
             WelcomeScreen(navController = navController,login,email,password)
+=======
+            WelcomeScreen(navController = navController, login, email, password)
+>>>>>>> master
         }
         composable(route = AppScreens.FirstEntryScreen.route) {
             val context = LocalContext.current
             val vm: TaskViewModel = viewModel(
+<<<<<<< HEAD
                 initializer = { TaskViewModel(TasksRepository(context))}
             )
             FirstEntryScreen(vm,onNavigatetoSettings = {
@@ -85,10 +94,28 @@ fun NavGraph(navController: NavHostController) {
             val context = LocalContext.current
             val vm: TaskViewModel = viewModel(
                 initializer = { TaskViewModel(TasksRepository(context))}
+=======
+                initializer = { TaskViewModel(TasksRepository(context)) }
+            )
+            FirstEntryScreen(vm, onNavigatetoSettings = {
+                navController.navigate(
+                    AppScreens.SettingsScreen.route,
+                )
+            }, onNavigatetoShop = {
+                navController.navigate(AppScreens.SettingsScreen.route,)
+            })
+        }
+
+        composable(route = AppScreens.FirstEntryScreenEmail.route) { backStackEntry ->
+            val context = LocalContext.current
+            val vm: TaskViewModel = viewModel(
+                initializer = { TaskViewModel(TasksRepository(context)) }
+>>>>>>> master
             )
             val login = backStackEntry.arguments?.getString("login")
             val email = backStackEntry.arguments?.getString("email")
             val password = backStackEntry.arguments?.getString("password")
+<<<<<<< HEAD
             FirstEntryScreen(vm,onNavigatetoSettings = {
                 navController.navigate("settings/$login/$email/$password")
             })
@@ -101,6 +128,32 @@ fun NavGraph(navController: NavHostController) {
         }
         composable(route = AppScreens.SettingsScreen.route){
             SettingsScreen(onNavigatetoTasks = {navController.navigate(AppScreens.FirstEntryScreen.route)})
+=======
+
+            FirstEntryScreen(vm, onNavigatetoSettings = {
+                navController.navigate("settings/$login/$email/$password")
+            }, onNavigatetoShop = {
+                navController.navigate(AppScreens.SettingsScreen.route,)
+            })
+
+            composable(route = AppScreens.SettingsScreenEmail.route) { backStackEntry ->
+                val login = backStackEntry.arguments?.getString("login")
+                val email = backStackEntry.arguments?.getString("email")
+                val password = backStackEntry.arguments?.getString("password")
+                SettingsScreen(
+                    onNavigatetoTasks = { navController.navigate("first_entry/$login/$email/$password") },
+                    login = login,
+                    email = email,
+                    password = password
+                )
+            }
+            composable(route = AppScreens.SettingsScreen.route) {
+                SettingsScreen(onNavigatetoTasks = { navController.navigate(AppScreens.FirstEntryScreen.route) })
+            }
+            composable(route = AppScreens.ShopScreen.route) {
+                SettingsScreen(onNavigatetoTasks = { navController.navigate(AppScreens.FirstEntryScreen.route) })
+            }
+>>>>>>> master
         }
     }
 }
