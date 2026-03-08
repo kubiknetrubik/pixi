@@ -37,8 +37,11 @@ import com.example.vk.ui.theme.Error
 import com.example.vk.ui.theme.OrangePrimary
 import com.example.vk.ui.theme.SignupBackground
 import android.util.Log
+import androidx.compose.runtime.LaunchedEffect
+import com.example.vk.datacontrol.AuthViewModel
+
 @Composable
-fun WelcomeScreen(navController: NavController,login: String? = "", email: String?="", password: String?="") {
+fun WelcomeScreen(navController: NavController,login: String? = "", email: String?="", password: String?="",authvm: AuthViewModel) {
     val context = LocalContext.current
 
 
@@ -100,7 +103,8 @@ fun WelcomeScreen(navController: NavController,login: String? = "", email: Strin
             ContinueButton(
                 onClick = {
 
-                    navController.navigate("first_entry/$login/$email/$password")
+                    navController.navigate("first_entry")
+                    authvm.clearJustRegistered()
 
                 }
             )

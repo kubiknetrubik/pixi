@@ -32,32 +32,26 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.vk.R
 import com.example.vk.datacontrol.AuthViewModel
+import com.example.vk.navigation.AppScreens
 import com.example.vk.ui.components.buttons.ContinueButton
 import com.example.vk.ui.components.fields.PasswordInputField
 import com.example.vk.ui.components.fields.TextInputField
 import com.example.vk.ui.theme.BrownText
 import com.example.vk.ui.theme.Error
-import com.example.vk.ui.theme.OrangePrimary
 import com.example.vk.ui.theme.SignupBackground
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import kotlinx.coroutines.delay
 
 @Composable
-fun EmailRegistrationScreen(navController: NavController,onSignInClick: () -> Unit = {},authvm: AuthViewModel) {
+fun SignInEmailScreen(navController: NavController, onNavigateToEmail: () -> Unit = {}, authvm: AuthViewModel) {
     val context = LocalContext.current
     var login by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var confirmPassword by remember { mutableStateOf("") }
     var onclick by remember { mutableStateOf(false) }
     val errorMessage by authvm.errorMessage.collectAsState()
-
-
-    val passwordsMatch = password == confirmPassword || confirmPassword.isEmpty()
-    
-
-    val showError = !passwordsMatch && confirmPassword.isNotEmpty()
     LaunchedEffect(errorMessage) {
         errorMessage?.let {
             Toast.makeText(context, it, Toast.LENGTH_LONG).show()
@@ -89,14 +83,7 @@ fun EmailRegistrationScreen(navController: NavController,onSignInClick: () -> Un
             .padding(horizontal = 16.dp)
 
 
-        TextInputField(
-            modifier = inputModifier,
-            placeholder = "Логин",
-            value = login,
-            onValueChange = { login = it }
-        )
 
-        Spacer(modifier = Modifier.height(12.dp))
 
 
         TextInputField(
@@ -119,40 +106,19 @@ fun EmailRegistrationScreen(navController: NavController,onSignInClick: () -> Un
 
         )
         Spacer(modifier = Modifier.height(12.dp))
-        PasswordInputField(
-            modifier = inputModifier,
-            placeholder = "Пароль",
-            value = confirmPassword,
-            onValueChange = { confirmPassword = it },
-            passwordVisible = onclick,
-            onclickpass = {onclick = !onclick}
-        )
-
-        if (showError) {
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "Пароли должны совпадать",
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Normal,
-                color = Error,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            )
-        }
 
         Spacer(modifier = Modifier.height(24.dp))
 
 
         Text(
-            text = "Уже есть аккаунт? Авторизируйтесь",
+            text = "Еще нет аккаунта? Зарегистрируйтесь",
             fontSize = 15.sp,
             fontWeight = FontWeight.Medium,
             color = BrownText,
             textDecoration = TextDecoration.Underline,
             modifier = Modifier.clickable {
                 Toast.makeText(context, "Sign in clicked", Toast.LENGTH_SHORT).show()
-                onSignInClick()
+                onNavigateToEmail()
             }
         )
 
@@ -161,8 +127,7 @@ fun EmailRegistrationScreen(navController: NavController,onSignInClick: () -> Un
 
         ContinueButton(
             onClick = {
-
-                authvm.signUp(email,password,login)
+                authvm.signIn(email,password)
 
 
             }
@@ -171,14 +136,13 @@ fun EmailRegistrationScreen(navController: NavController,onSignInClick: () -> Un
         Spacer(modifier = Modifier.height(16.dp))
     }
 }
-
-private fun signUp(auth: FirebaseAuth, email:String, password:String){
-    auth.createUserWithEmailAndPassword(email,password)
+private fun signIn(auth: FirebaseAuth, email:String, password:String){
+    auth.signInWithEmailAndPassword(email,password)
         .addOnCompleteListener {
             if(it.isSuccessful){
-                Log.d("Log","success")
+                Log.d("Log","success sign in")
             }else{
-                Log.d("Log","fail")
+                Log.d("Log","fail sihn in")
             }
         }
 }

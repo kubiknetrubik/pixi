@@ -17,11 +17,32 @@ import com.example.vk.ui.signup.SignUpScreen
 import com.example.vk.ui.welcome.WelcomeScreen
 import com.example.vk.ui.settings.SettingsScreen
 import android.util.Log
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import com.example.vk.datacontrol.AuthState
+import com.example.vk.datacontrol.AuthViewModel
+import com.example.vk.ui.registration.SignInEmailScreen
+
 @Composable
 fun NavGraph(navController: NavHostController) {
+    val authvm: AuthViewModel = viewModel(
+        initializer = { AuthViewModel()}
+    )
+
+    val authState by authvm.authState.collectAsState()
+    val startDestination = when (authState) {
+        is AuthState.Unauthenticated -> AppScreens.SignUpScreen.route
+        is AuthState.Authenticated -> {
+            if ((authState as AuthState.Authenticated).isJustRegistered) {
+                AppScreens.WelcomeScreen.route
+            } else {
+                AppScreens.FirstEntryScreen.route
+            }
+        }
+    }
     NavHost(
         navController = navController,
-        startDestination = AppScreens.SignUpScreen.route
+        startDestination = startDestination
     ) {
 
         composable(route = AppScreens.SignUpScreen.route) {
@@ -41,8 +62,16 @@ fun NavGraph(navController: NavHostController) {
                 },
                 onSkipClick = {
                     navController.navigate(AppScreens.WelcomeScreen.route)
+                },
+                onSignInClick= {
+                    navController.navigate(AppScreens.SignInEmailScreen.route)
                 }
             )
+        }
+        composable(route = AppScreens.SignInEmailScreen.route) {
+            SignInEmailScreen(navController = navController,onNavigateToEmail ={
+                navController.navigate(AppScreens.EmailRegistrationScreen.route)
+            },authvm=authvm)
         }
 
         composable(route = AppScreens.AppleRegistrationScreen.route) {
@@ -58,11 +87,13 @@ fun NavGraph(navController: NavHostController) {
         }
 
         composable(route = AppScreens.EmailRegistrationScreen.route) {
-            EmailRegistrationScreen(navController = navController)
+            EmailRegistrationScreen(navController = navController, onSignInClick = {
+                navController.navigate(AppScreens.SignInEmailScreen.route)
+            },authvm=authvm)
         }
 
         composable(route = AppScreens.WelcomeScreen.route) {
-            WelcomeScreen(navController = navController)
+            WelcomeScreen(navController = navController,authvm=authvm)
         }
         composable(route = AppScreens.WelcomeScreenEmail.route) {backStackEntry ->
             val login = backStackEntry.arguments?.getString("login")
@@ -70,7 +101,7 @@ fun NavGraph(navController: NavHostController) {
             val password = backStackEntry.arguments?.getString("password")
 
 
-            WelcomeScreen(navController = navController,login,email,password)
+            WelcomeScreen(navController = navController,login,email,password,authvm=authvm)
         }
         composable(route = AppScreens.FirstEntryScreen.route) {
             val context = LocalContext.current
@@ -97,10 +128,10 @@ fun NavGraph(navController: NavHostController) {
             val login = backStackEntry.arguments?.getString("login")
             val email = backStackEntry.arguments?.getString("email")
             val password = backStackEntry.arguments?.getString("password")
-            SettingsScreen(onNavigatetoTasks = {navController.navigate("first_entry/$login/$email/$password")},login = login,email = email,password =password)
+            SettingsScreen(onNavigatetoTasks = {navController.navigate("first_entry/$login/$email/$password")},login = login,email = email,password =password, authvm = authvm)
         }
         composable(route = AppScreens.SettingsScreen.route){
-            SettingsScreen(onNavigatetoTasks = {navController.navigate(AppScreens.FirstEntryScreen.route)})
+            SettingsScreen(onNavigatetoTasks = {navController.navigate(AppScreens.FirstEntryScreen.route)},authvm=authvm)
         }
     }
 }
