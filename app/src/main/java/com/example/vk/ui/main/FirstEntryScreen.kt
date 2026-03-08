@@ -132,7 +132,7 @@ fun TaskItem(task:Task){
 
 @Composable
 fun FirstEntryScreen(vm: TaskViewModel,
-onNavigatetoSettings: () -> Unit = {}
+onNavigatetoSettings: () -> Unit = {},
 ) {
 
     val state by vm.uiState.collectAsState()

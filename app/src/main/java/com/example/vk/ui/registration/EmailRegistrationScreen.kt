@@ -162,7 +162,7 @@ fun EmailRegistrationScreen(navController: NavController,onSignInClick: () -> Un
         ContinueButton(
             onClick = {
 
-                authvm.signUp(email,password)
+                authvm.signUp(email,password,login)
 
 
             }

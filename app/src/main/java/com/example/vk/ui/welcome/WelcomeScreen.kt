@@ -103,7 +103,8 @@ fun WelcomeScreen(navController: NavController,login: String? = "", email: Strin
             ContinueButton(
                 onClick = {
 
-                    navController.navigate("first_entry/$login/$email/$password")
+                    navController.navigate("first_entry")
+                    authvm.clearJustRegistered()
 
                 }
             )
