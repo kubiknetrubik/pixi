@@ -22,7 +22,7 @@ import androidx.compose.runtime.getValue
 import com.example.vk.datacontrol.AuthState
 import com.example.vk.datacontrol.AuthViewModel
 import com.example.vk.ui.registration.SignInEmailScreen
-
+import com.example.vk.ui.shop.ShopScreen
 @Composable
 fun NavGraph(navController: NavHostController) {
     val authvm: AuthViewModel = viewModel(
