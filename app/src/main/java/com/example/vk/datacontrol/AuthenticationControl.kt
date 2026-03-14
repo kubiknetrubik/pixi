@@ -3,6 +3,7 @@ package com.example.vk.datacontrol
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Firebase
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.auth
@@ -18,6 +19,8 @@ class AuthViewModel : ViewModel() {
     val userLogin: StateFlow<String?> = _userLogin
     private val _userEmail = MutableStateFlow<String?>(null)
     val userEmail: StateFlow<String?> = _userEmail
+    private val _passwordChangeState = MutableStateFlow<PasswordChangeState>(PasswordChangeState.Nothing)
+    val passwordChangeState: StateFlow<PasswordChangeState> = _passwordChangeState
 
     init{
         auth.addAuthStateListener { firebaseAuth ->
@@ -49,6 +52,8 @@ class AuthViewModel : ViewModel() {
                     _userEmail.value = user?.email
                     _authState.value = AuthState.Authenticated(isJustRegistered = false)
                     _errorMessage.value = null
+                    Log.d("Loga", email)
+                    Log.d("Loga", password)
                 }else{
                     Log.d("Log","fail sihn in")
                     _errorMessage.value="Вы ошиблись с введенными данными"
@@ -90,10 +95,48 @@ class AuthViewModel : ViewModel() {
     fun clearJustRegistered() {
         _authState.value = AuthState.Authenticated(isJustRegistered = false)
     }
+    fun changePassword(currentPassword: String, newPassword: String) {
+        val user = auth.currentUser ?: run {
+            _passwordChangeState.value = PasswordChangeState.Error("Пользователь не найден")
+            return
+        }
+        val email = user.email ?: run {
+            _passwordChangeState.value = PasswordChangeState.Error("Email не найден")
+            return
+        }
+        _passwordChangeState.value = PasswordChangeState.Loading
+        val credential = EmailAuthProvider.getCredential(email, currentPassword)
+        user.reauthenticate(credential)
+            .addOnCompleteListener { reauthTask ->
+                if (!reauthTask.isSuccessful) {
+                    _passwordChangeState.value = PasswordChangeState.Error("Неверный текущий пароль")
+                    Log.d("Loga",currentPassword)
+                    Log.d("Loga",email)
+                    return@addOnCompleteListener
+                }
+                user.updatePassword(newPassword)
+                    .addOnCompleteListener { updateTask ->
+                        if (updateTask.isSuccessful) {
+                            _passwordChangeState.value = PasswordChangeState.Success("Пароль успешно изменён")
+                        } else {
+                            _passwordChangeState.value = PasswordChangeState.Error("Ошибка при смене пароля")
+                        }
+                    }
+            }
+    }
+    fun resetPasswordChangeState() {
+        _passwordChangeState.value = PasswordChangeState.Nothing
+    }
 
 
 }
 sealed class AuthState {
     object Unauthenticated : AuthState()
     data class Authenticated(val isJustRegistered: Boolean = false) : AuthState()
+}
+sealed class PasswordChangeState {
+    object Nothing : PasswordChangeState()
+    object Loading : PasswordChangeState()
+    data class Success(val message: String) : PasswordChangeState()
+    data class Error(val message: String) : PasswordChangeState()
 }

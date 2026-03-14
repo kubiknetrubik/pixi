@@ -13,6 +13,7 @@ sealed class AppScreens(val route: String){
     object SettingsScreenEmail : AppScreens("settings/{login}/{email}/{password}")
     object SettingsScreen : AppScreens("settings")
     object SignInEmailScreen : AppScreens("sign_in")
+    object ChangePasswordScreen : AppScreens("change_password")
 
 
 }
