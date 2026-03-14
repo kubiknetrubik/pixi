@@ -13,8 +13,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import com.example.vk.R
 import com.example.vk.datacontrol.AuthViewModel
 import com.example.vk.ui.components.bars.BottomBar
+import com.example.vk.ui.theme.OrangeContinue
 import com.example.vk.ui.theme.OrangePrimary
 import com.example.vk.ui.theme.SignupBackground
 @Composable
@@ -50,7 +54,7 @@ fun SettingsPart(text:String){
     }
 }
 @Composable
-fun SettingsScreen(login: String? = "", email: String?="", password: String?="", onNavigatetoTasks: () -> Unit = {},authvm: AuthViewModel){
+fun SettingsScreen(login: String? = "", email: String?="", password: String?="", onNavigatetoTasks: () -> Unit = {},authvm: AuthViewModel,onNavigatetoChange:()->Unit={}){
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     val userLogin by authvm.userLogin.collectAsState()
@@ -144,6 +148,31 @@ fun SettingsScreen(login: String? = "", email: String?="", password: String?="",
 
             Text(text = stringResource(R.string.password), fontSize = 14.sp, color = colorResource(R.color.black))
             SettingsPart("********")
+            Button(
+                onClick = {onNavigatetoChange()},
+                modifier = Modifier.fillMaxWidth(),
+
+                shape = RoundedCornerShape(8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = OrangeContinue
+                )
+
+            ) {
+                Text("Смена пароля")
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = {authvm.signOut()},
+                modifier = Modifier.fillMaxWidth(),
+
+                shape = RoundedCornerShape(8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = OrangeContinue
+                )
+
+            ) {
+                Text("Выйти из аккаунта")
+            }
         }
 
     }

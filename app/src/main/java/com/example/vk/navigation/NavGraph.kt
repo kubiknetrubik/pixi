@@ -21,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.example.vk.datacontrol.AuthState
 import com.example.vk.datacontrol.AuthViewModel
+import com.example.vk.ui.changepassword.ChangePasswordScreen
 import com.example.vk.ui.registration.SignInEmailScreen
 
 @Composable
@@ -128,10 +129,15 @@ fun NavGraph(navController: NavHostController) {
             val login = backStackEntry.arguments?.getString("login")
             val email = backStackEntry.arguments?.getString("email")
             val password = backStackEntry.arguments?.getString("password")
-            SettingsScreen(onNavigatetoTasks = {navController.navigate("first_entry/$login/$email/$password")},login = login,email = email,password =password, authvm = authvm)
+            SettingsScreen(onNavigatetoTasks = {navController.navigate("first_entry/$login/$email/$password")},login = login,email = email,password =password, authvm = authvm, onNavigatetoChange = {navController.navigate(
+                AppScreens.ChangePasswordScreen.route)})
         }
         composable(route = AppScreens.SettingsScreen.route){
-            SettingsScreen(onNavigatetoTasks = {navController.navigate(AppScreens.FirstEntryScreen.route)},authvm=authvm)
+            SettingsScreen(onNavigatetoTasks = {navController.navigate(AppScreens.FirstEntryScreen.route)},authvm=authvm, onNavigatetoChange = {navController.navigate(
+                AppScreens.ChangePasswordScreen.route)})
+        }
+        composable(route = AppScreens.ChangePasswordScreen.route){
+            ChangePasswordScreen(navController,authViewModel=authvm)
         }
     }
 }
