@@ -12,6 +12,8 @@ sealed class AppScreens(val route: String){
     object FirstEntryScreenEmail : AppScreens("first_entry/{login}/{email}/{password}")
     object SettingsScreenEmail : AppScreens("settings/{login}/{email}/{password}")
     object SettingsScreen : AppScreens("settings")
+    object SignInEmailScreen : AppScreens("sign_in")
+    object ChangePasswordScreen : AppScreens("change_password")
 
     object ShopScreen : AppScreens("shop")
     object GeneralScreen : AppScreens("general")

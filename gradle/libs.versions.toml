@@ -18,7 +18,14 @@ ksp = "2.0.21-1.0.27"
 room = "2.6.1"
 
 
+
+gmsVersion = "4.4.4"
+bomVersion = "34.9.0"
+
 [libraries]
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore"}
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "bomVersion"}
+firebase-auth = { module = "com.google.firebase:firebase-auth"}
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -35,9 +42,6 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 
-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
-firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
-
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
@@ -49,7 +53,11 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 
+
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+
+
+gms = { id = "com.google.gms.google-services", version.ref = "gmsVersion" }
 

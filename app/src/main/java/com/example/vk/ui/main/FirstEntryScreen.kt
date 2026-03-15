@@ -158,10 +158,13 @@ fun TaskItem(task:Task){
 }
 
 @Composable
+
 fun FirstEntryScreen(
     vm: TaskViewModel,
     onNavigatetoSettings: () -> Unit = {},
     onNavigatetoShop: () -> Unit = {}
+
+
 ) {
     val state by vm.uiState.collectAsState()
     val snackbarMessage by vm.snackbarMessage.collectAsState()

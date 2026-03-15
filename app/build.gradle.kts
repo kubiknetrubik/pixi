@@ -4,8 +4,10 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.android)
 
-    alias(libs.plugins.google.gms.google.services)
+
     alias(libs.plugins.ksp)
+
+    alias(libs.plugins.gms)
 
 }
 
@@ -59,8 +61,6 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation(libs.androidx.navigation.compose)
 
-    implementation(libs.firebase.firestore)
-    implementation(libs.firebase.database)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -71,8 +71,13 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
 
+
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.auth)
 
 }
