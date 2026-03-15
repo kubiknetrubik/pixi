@@ -15,5 +15,6 @@ sealed class AppScreens(val route: String){
     object SignInEmailScreen : AppScreens("sign_in")
     object ChangePasswordScreen : AppScreens("change_password")
 
-
-}
+    object ShopScreen : AppScreens("shop")
+    object GeneralScreen : AppScreens("general")
+    }

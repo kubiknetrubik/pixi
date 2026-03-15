@@ -54,7 +54,8 @@ fun SettingsPart(text:String){
     }
 }
 @Composable
-fun SettingsScreen(login: String? = "", email: String?="", password: String?="", onNavigatetoTasks: () -> Unit = {},authvm: AuthViewModel,onNavigatetoChange:()->Unit={}){
+fun SettingsScreen(login: String? = "", email: String?="", password: String?="", onNavigatetoTasks: () -> Unit = {}, onNavigatetoShop: () -> Unit = {},authvm: AuthViewModel,onNavigatetoChange:()->Unit={}){
+
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     val userLogin by authvm.userLogin.collectAsState()
@@ -69,7 +70,7 @@ fun SettingsScreen(login: String? = "", email: String?="", password: String?="",
                     .fillMaxHeight(),
                 contentAlignment = Alignment.BottomCenter
             ) {
-                BottomBar(onNavigatetoTasks = onNavigatetoTasks)
+                BottomBar(onNavigatetoTasks = onNavigatetoTasks, onNavigatetoShop = onNavigatetoShop)
             }
             Column(
                 modifier = Modifier
@@ -115,7 +116,8 @@ fun SettingsScreen(login: String? = "", email: String?="", password: String?="",
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom
         ){
-            BottomBar(onNavigatetoTasks=onNavigatetoTasks)
+            BottomBar(onNavigatetoTasks = onNavigatetoTasks, onNavigatetoShop = onNavigatetoShop)
+
 
         }
         Column(
@@ -176,6 +178,5 @@ fun SettingsScreen(login: String? = "", email: String?="", password: String?="",
         }
 
     }
-
 
 }
