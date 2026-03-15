@@ -5,6 +5,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "name_table")
 data class NameEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
-    val name: String
+    val id: Int = 0,
+    val title: String,
+    val description: String,
+    val isCompleted: Boolean = false,
+    val cost: Int = 0,
+    val updatedAt: Long = System.currentTimeMillis()
 )

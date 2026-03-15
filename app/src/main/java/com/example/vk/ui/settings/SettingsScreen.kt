@@ -47,7 +47,7 @@ fun SettingsPart(text:String){
     }
 }
 @Composable
-fun SettingsScreen(login: String? = "", email: String?="", password: String?="", onNavigatetoTasks: () -> Unit = {}){
+fun SettingsScreen(login: String? = "", email: String?="", password: String?="", onNavigatetoTasks: () -> Unit = {}, onNavigatetoShop: () -> Unit = {}){
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     if(isLandscape){
@@ -60,7 +60,7 @@ fun SettingsScreen(login: String? = "", email: String?="", password: String?="",
                     .fillMaxHeight(),
                 contentAlignment = Alignment.BottomCenter
             ) {
-                BottomBar(onNavigatetoTasks = onNavigatetoTasks)
+                BottomBar(onNavigatetoTasks = onNavigatetoTasks, onNavigatetoShop = onNavigatetoShop)
             }
             Column(
                 modifier = Modifier
@@ -106,7 +106,8 @@ fun SettingsScreen(login: String? = "", email: String?="", password: String?="",
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom
         ){
-            BottomBar(onNavigatetoTasks=onNavigatetoTasks)
+            BottomBar(onNavigatetoTasks = onNavigatetoTasks, onNavigatetoShop = onNavigatetoShop)
+
 
         }
         Column(

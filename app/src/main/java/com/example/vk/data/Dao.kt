@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface Dao
 {@Insert(onConflict = OnConflictStrategy.REPLACE)
-suspend fun insertItem(nameEntity: NameEntity)
+suspend fun insertItem(nameEntity: NameEntity): Long
     @Delete
     suspend fun deleteItem(nameEntity: NameEntity)
     @Query("SELECT * FROM name_table")
