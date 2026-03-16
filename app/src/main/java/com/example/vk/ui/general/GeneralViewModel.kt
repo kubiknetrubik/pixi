@@ -11,8 +11,10 @@ class GeneralViewModel : ViewModel() {
 
     fun selectedLamb(){
         _uistate.value = _uistate.value.copy(selectedPets = SelectedPet.LAMB)
+        SelectedPetHolder.setSelected(SelectedPet.LAMB)
     }
     fun selectedCat(){
         _uistate.value = _uistate.value.copy(selectedPets = SelectedPet.CAT)
+        SelectedPetHolder.setSelected(SelectedPet.CAT)
     }
 }
