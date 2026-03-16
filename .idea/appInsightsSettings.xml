@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.vk" />
+                  <option name="mobileSdkAppId" value="1:561745998642:android:8d1fbb3592d9514b1cdd2b" />
+                  <option name="projectId" value="pixii-7dddd" />
+                  <option name="projectNumber" value="561745998642" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

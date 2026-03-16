@@ -7,7 +7,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.vk.ui.main.FirstEntryScreen
-import com.example.vk.ui.main.TaskViewModel
 import com.example.vk.ui.registration.AppleRegistrationScreen
 import com.example.vk.ui.registration.EmailRegistrationScreen
 import com.example.vk.ui.registration.GoogleRegistrationScreen
@@ -24,6 +23,7 @@ import androidx.compose.runtime.getValue
 import com.example.vk.datacontrol.AuthState
 import com.example.vk.datacontrol.AuthViewModel
 import com.example.vk.ui.changepassword.ChangePasswordScreen
+import com.example.vk.ui.main.TaskViewModel
 import com.example.vk.ui.registration.SignInEmailScreen
 
 
