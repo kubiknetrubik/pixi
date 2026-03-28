@@ -41,7 +41,7 @@ import androidx.compose.runtime.LaunchedEffect
 import com.example.vk.datacontrol.AuthViewModel
 
 @Composable
-fun WelcomeScreen(navController: NavController,login: String? = "", email: String?="", password: String?="",authvm: AuthViewModel) {
+fun WelcomeScreen(navController: NavController,login: String? = "", email: String?="", password: String?="") {
     val context = LocalContext.current
 
 
@@ -104,7 +104,6 @@ fun WelcomeScreen(navController: NavController,login: String? = "", email: Strin
                 onClick = {
 
                     navController.navigate("first_entry")
-                    authvm.clearJustRegistered()
 
                 }
             )

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,9 +30,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.vk.R
+import com.example.vk.datacontrol.AuthRepository
 import com.example.vk.datacontrol.AuthViewModel
+import com.example.vk.navigation.AppScreens
 import com.example.vk.ui.components.buttons.ContinueButton
 import com.example.vk.ui.components.fields.PasswordInputField
 import com.example.vk.ui.components.fields.TextInputField
@@ -42,27 +46,60 @@ import com.example.vk.ui.theme.SignupBackground
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
+data class SignUpUiState(
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null,
+    val isSuccess: Boolean = false
+)
+
+class SignUpViewModel(private val repository: AuthRepository) : ViewModel() {
+    private val _uiState = MutableStateFlow(SignUpUiState())
+    val uiState = _uiState.asStateFlow()
+
+    fun signUp(email: String, password: String, login: String) {
+        _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+        repository.signUp(email, password, login) { success, error ->
+            if (success) {
+                _uiState.update { it.copy(isLoading = false, isSuccess = true) }
+            } else {
+                _uiState.update { it.copy(isLoading = false, errorMessage = error) }
+            }
+        }
+    }
+
+    fun resetError() = _uiState.update { it.copy(errorMessage = null) }
+}
 @Composable
-fun EmailRegistrationScreen(navController: NavController,onSignInClick: () -> Unit = {},authvm: AuthViewModel) {
+fun EmailRegistrationScreen(navController: NavController,onSignInClick: () -> Unit = {},viewModel: SignUpViewModel) {
     val context = LocalContext.current
     var login by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var onclick by remember { mutableStateOf(false) }
-    val errorMessage by authvm.errorMessage.collectAsState()
+    val state by viewModel.uiState.collectAsState()
 
 
     val passwordsMatch = password == confirmPassword || confirmPassword.isEmpty()
     
 
     val showError = !passwordsMatch && confirmPassword.isNotEmpty()
-    LaunchedEffect(errorMessage) {
-        errorMessage?.let {
-            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+    LaunchedEffect(state.errorMessage) {
+        state.errorMessage?.let {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            viewModel.resetError()
         }
-        authvm.clearError()
+    }
+    LaunchedEffect(state.isSuccess) {
+        if (state.isSuccess) {
+            navController.navigate(AppScreens.WelcomeScreen.route) {
+                popUpTo(AppScreens.SignUpScreen.route) { inclusive = true }
+            }
+        }
     }
     Column(
         modifier = Modifier
@@ -159,26 +196,22 @@ fun EmailRegistrationScreen(navController: NavController,onSignInClick: () -> Un
         Spacer(modifier = Modifier.height(12.dp))
 
 
-        ContinueButton(
-            onClick = {
-
-                authvm.signUp(email,password,login)
-
-
-            }
-        )
+        if (state.isLoading) {
+            CircularProgressIndicator(color = OrangePrimary)
+        } else {
+            ContinueButton(
+                onClick = {
+                    when {
+                        login.isEmpty() || email.isEmpty() || password.isEmpty() ->
+                            Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
+                        password != confirmPassword ->
+                            Toast.makeText(context, "Пароли не совпадают", Toast.LENGTH_SHORT).show()
+                        else -> viewModel.signUp(email, password, login)
+                    }
+                }
+            )
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
     }
-}
-
-private fun signUp(auth: FirebaseAuth, email:String, password:String){
-    auth.createUserWithEmailAndPassword(email,password)
-        .addOnCompleteListener {
-            if(it.isSuccessful){
-                Log.d("Log","success")
-            }else{
-                Log.d("Log","fail")
-            }
-        }
 }

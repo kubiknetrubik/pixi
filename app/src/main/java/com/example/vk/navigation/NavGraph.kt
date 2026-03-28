@@ -20,29 +20,27 @@ import com.example.vk.data.NoteRepository
 import com.example.vk.ui.general.GeneralScreen
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import com.example.vk.datacontrol.AuthRepository
 import com.example.vk.datacontrol.AuthState
 import com.example.vk.datacontrol.AuthViewModel
 import com.example.vk.ui.changepassword.ChangePasswordScreen
+import com.example.vk.ui.changepassword.ChangePasswordViewModel
 import com.example.vk.ui.main.TaskViewModel
 import com.example.vk.ui.registration.SignInEmailScreen
+import com.example.vk.ui.registration.SignInViewModel
+import com.example.vk.ui.registration.SignUpViewModel
+import com.example.vk.ui.settings.ProfileViewModel
 
 
 @Composable
 fun NavGraph(navController: NavHostController) {
-    val authvm: AuthViewModel = viewModel(
-        initializer = { AuthViewModel()}
-    )
+    val authRepository = remember { AuthRepository() }
 
-    val authState by authvm.authState.collectAsState()
-    val startDestination = when (authState) {
-        is AuthState.Unauthenticated -> AppScreens.SignUpScreen.route
-        is AuthState.Authenticated -> {
-            if ((authState as AuthState.Authenticated).isJustRegistered) {
-                AppScreens.WelcomeScreen.route
-            } else {
-                AppScreens.FirstEntryScreen.route
-            }
-        }
+
+    val startDestination = remember {
+        if (authRepository.currentUser != null) AppScreens.FirstEntryScreen.route
+        else AppScreens.SignUpScreen.route
     }
     NavHost(
         navController = navController,
@@ -73,9 +71,14 @@ fun NavGraph(navController: NavHostController) {
             )
         }
         composable(route = AppScreens.SignInEmailScreen.route) {
+            val vm: SignInViewModel = viewModel(
+                initializer = {
+                    SignInViewModel(authRepository)
+                }
+            )
             SignInEmailScreen(navController = navController,onNavigateToEmail ={
                 navController.navigate(AppScreens.EmailRegistrationScreen.route)
-            },authvm=authvm)
+            },viewModel=vm)
         }
 
 
@@ -102,13 +105,18 @@ fun NavGraph(navController: NavHostController) {
         }
 
         composable(route = AppScreens.EmailRegistrationScreen.route) {
+            val vm: SignUpViewModel = viewModel(
+                initializer = {
+                    SignUpViewModel(authRepository)
+                }
+            )
             EmailRegistrationScreen(navController = navController, onSignInClick = {
                 navController.navigate(AppScreens.SignInEmailScreen.route)
-            },authvm=authvm)
+            },viewModel=vm)
         }
 
         composable(route = AppScreens.WelcomeScreen.route) {
-            WelcomeScreen(navController = navController,authvm=authvm)
+            WelcomeScreen(navController = navController)
         }
 
         composable(route = AppScreens.WelcomeScreenEmail.route) {backStackEntry ->
@@ -118,7 +126,7 @@ fun NavGraph(navController: NavHostController) {
             val password = backStackEntry.arguments?.getString("password")
 
         
-            WelcomeScreen(navController = navController,login,email,password,authvm=authvm)
+            WelcomeScreen(navController = navController,login,email,password)
 
         }
 
@@ -160,17 +168,41 @@ fun NavGraph(navController: NavHostController) {
             val login = backStackEntry.arguments?.getString("login")
             val email = backStackEntry.arguments?.getString("email")
             val password = backStackEntry.arguments?.getString("password")
+            val vm: ProfileViewModel = viewModel(
+                initializer = {
+                    ProfileViewModel(authRepository)
+                }
+            )
+            SettingsScreen(
+                onNavigatetoTasks = { navController.navigate(AppScreens.FirstEntryScreen.route) },
+                onNavigatetoShop = { navController.navigate(AppScreens.ShopScreen.route) },
+                onNavigatetoChange = { navController.navigate(AppScreens.ChangePasswordScreen.route) },
+                navController = navController,
+                viewModel = vm
+            )
 
-
-            SettingsScreen(onNavigatetoTasks = {navController.navigate("first_entry/$login/$email/$password")},login = login,email = email,password =password, authvm = authvm, onNavigatetoChange = {navController.navigate(
-                AppScreens.ChangePasswordScreen.route)})
         }
         composable(route = AppScreens.SettingsScreen.route){
-            SettingsScreen(onNavigatetoTasks = {navController.navigate(AppScreens.FirstEntryScreen.route)},authvm=authvm, onNavigatetoChange = {navController.navigate(
-                AppScreens.ChangePasswordScreen.route)})
+            val vm: ProfileViewModel = viewModel(
+                initializer = {
+                    ProfileViewModel(authRepository)
+                }
+            )
+            SettingsScreen(
+                onNavigatetoTasks = { navController.navigate(AppScreens.FirstEntryScreen.route) },
+                onNavigatetoShop = { navController.navigate(AppScreens.ShopScreen.route) },
+                onNavigatetoChange = { navController.navigate(AppScreens.ChangePasswordScreen.route) },
+                navController = navController,
+                viewModel = vm
+            )
         }
         composable(route = AppScreens.ChangePasswordScreen.route){
-            ChangePasswordScreen(navController,authViewModel=authvm)
+            val vm: ChangePasswordViewModel = viewModel(
+                initializer = {
+                    ChangePasswordViewModel(authRepository)
+                }
+            )
+            ChangePasswordScreen(navController,viewModel=vm)
 
         }
     }
