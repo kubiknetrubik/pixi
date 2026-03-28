@@ -175,7 +175,7 @@ fun NavGraph(navController: NavHostController) {
             )
             SettingsScreen(
                 onNavigatetoTasks = { navController.navigate(AppScreens.FirstEntryScreen.route) },
-                onNavigatetoShop = { navController.navigate(AppScreens.ShopScreen.route) },
+                onNavigatetoShop =  {navController.navigate(AppScreens.GeneralScreen.route)},
                 onNavigatetoChange = { navController.navigate(AppScreens.ChangePasswordScreen.route) },
                 navController = navController,
                 viewModel = vm
@@ -190,7 +190,7 @@ fun NavGraph(navController: NavHostController) {
             )
             SettingsScreen(
                 onNavigatetoTasks = { navController.navigate(AppScreens.FirstEntryScreen.route) },
-                onNavigatetoShop = { navController.navigate(AppScreens.ShopScreen.route) },
+                onNavigatetoShop =  {navController.navigate(AppScreens.GeneralScreen.route)},
                 onNavigatetoChange = { navController.navigate(AppScreens.ChangePasswordScreen.route) },
                 navController = navController,
                 viewModel = vm
