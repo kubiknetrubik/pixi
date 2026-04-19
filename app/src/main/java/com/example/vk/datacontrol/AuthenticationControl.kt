@@ -53,14 +53,26 @@ class AuthViewModel : ViewModel() {
                     _authState.value = AuthState.Authenticated(isJustRegistered = false)
                     _errorMessage.value = null
                     Log.d("Loga", email)
-                    Log.d("Loga", password)
+                    //Log.d("Loga", password)
                 }else{
                     Log.d("Log","fail sihn in")
                     _errorMessage.value="Вы ошиблись с введенными данными"
                 }
             }
     }
+
+    private fun isPasswordValid(password: String): Boolean {
+        val hasDigit = password.any { it.isDigit() }
+        val hasUpperCase = password.any { it.isUpperCase() }
+        val hasMinLength = password.length >= 8
+
+        return hasMinLength && hasDigit && hasUpperCase
+    }
     fun signUp(email:String, password:String,login:String){
+        if (!isPasswordValid(password)) {
+            _errorMessage.value = "Пароль должен быть не менее 8 символов, содержать цифру и заглавную букву"
+            return
+        }
         auth.createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener {
                 if(it.isSuccessful){
@@ -88,6 +100,10 @@ class AuthViewModel : ViewModel() {
     }
     fun signOut() {
         auth.signOut()
+        _userLogin.value = null
+        _userEmail.value = null
+        _authState.value = AuthState.Unauthenticated
+        _errorMessage.value = null
     }
     fun clearError() {
         _errorMessage.value = null
@@ -110,7 +126,7 @@ class AuthViewModel : ViewModel() {
             .addOnCompleteListener { reauthTask ->
                 if (!reauthTask.isSuccessful) {
                     _passwordChangeState.value = PasswordChangeState.Error("Неверный текущий пароль")
-                    Log.d("Loga",currentPassword)
+                    //Log.d("Loga",currentPassword)
                     Log.d("Loga",email)
                     return@addOnCompleteListener
                 }

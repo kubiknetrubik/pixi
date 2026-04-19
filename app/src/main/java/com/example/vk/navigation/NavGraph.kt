@@ -21,27 +21,51 @@ import com.example.vk.ui.general.GeneralScreen
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+
+import com.example.vk.data.BalanceRepository
 import com.example.vk.datacontrol.AuthRepository
 import com.example.vk.datacontrol.AuthState
 import com.example.vk.datacontrol.AuthViewModel
 import com.example.vk.ui.changepassword.ChangePasswordScreen
 import com.example.vk.ui.changepassword.ChangePasswordViewModel
+import com.example.vk.ui.general.GeneralViewModel
+
 import com.example.vk.ui.main.TaskViewModel
 import com.example.vk.ui.registration.SignInEmailScreen
 import com.example.vk.ui.registration.SignInViewModel
 import com.example.vk.ui.registration.SignUpViewModel
 import com.example.vk.ui.settings.ProfileViewModel
 
-
 @Composable
-fun NavGraph(navController: NavHostController) {
-    val authRepository = remember { AuthRepository() }
 
+fun NavGraph(navController: NavHostController,
+             balanceRepository: BalanceRepository,
+authRepository: AuthRepository
+)
+{
 
-    val startDestination = remember {
+    val authvm: AuthViewModel = viewModel(
+        initializer = { AuthViewModel()}
+    )
+
+    val authState by authvm.authState.collectAsState()
+    val startDestination = when (authState) {
+        is AuthState.Unauthenticated -> AppScreens.SignUpScreen.route
+        is AuthState.Authenticated -> {
+            if ((authState as AuthState.Authenticated).isJustRegistered) {
+                AppScreens.WelcomeScreen.route
+            } else {
+                AppScreens.FirstEntryScreen.route
+            }
+        }
+    }
+
+    /*val startDestination = remember {
         if (authRepository.currentUser != null) AppScreens.FirstEntryScreen.route
         else AppScreens.SignUpScreen.route
-    }
+    }*/
+
+
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -85,7 +109,13 @@ fun NavGraph(navController: NavHostController) {
 
 
         composable(route = AppScreens.GeneralScreen.route) {
+            val generalViewModel: GeneralViewModel = viewModel(
+                initializer = {
+                    GeneralViewModel(balanceRepository)
+                }
+            )
             GeneralScreen(
+                viewModel = generalViewModel,
                 onNavigatetoSettings = { navController.navigate(AppScreens.SettingsScreen.route) },
                 onNavigatetoTasks = { navController.navigate(AppScreens.FirstEntryScreen.route) },
                 onNavigatetoShop = { navController.navigate(AppScreens.GeneralScreen.route) }
@@ -137,7 +167,7 @@ fun NavGraph(navController: NavHostController) {
             val vm: TaskViewModel = viewModel(
                 initializer = {
                     val dao = MainDb.createDataBase(context).dao
-                    TaskViewModel(NoteRepository(dao))
+                    TaskViewModel(NoteRepository(dao, balanceRepository ), balanceRepository)
                 }
             )
             FirstEntryScreen(
@@ -152,7 +182,7 @@ fun NavGraph(navController: NavHostController) {
             val vm: TaskViewModel = viewModel(
                 initializer = {
                     val dao = MainDb.createDataBase(context).dao
-                    TaskViewModel(NoteRepository(dao))
+                    TaskViewModel(NoteRepository(dao, balanceRepository ), balanceRepository)
                 }
             )
             val login = backStackEntry.arguments?.getString("login")
@@ -207,4 +237,3 @@ fun NavGraph(navController: NavHostController) {
         }
     }
 }
-

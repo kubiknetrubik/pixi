@@ -1,9 +1,9 @@
 package com.example.vk.ui.general
 
+import android.widget.Toast
+import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,45 +11,60 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.vk.R
 import com.example.vk.ui.components.bars.BottomBar
-import com.example.vk.ui.theme.OrangeContinue
+import com.example.vk.ui.general.components.GeneralChip
+import com.example.vk.ui.general.components.PetCardCat
+import com.example.vk.ui.general.components.PetCardLamb
+import com.example.vk.ui.general.components.ShopTopBar
 import com.example.vk.ui.theme.SignupBackground
-
-private val PetButtonOrangeBg = Color(0x4DF5A315)
+import kotlinx.coroutines.delay
 
 @Composable
 fun GeneralScreen(
-    viewModel: GeneralViewModel = viewModel(),
+    viewModel: GeneralViewModel,
     onNavigatetoSettings: () -> Unit = {},
     onNavigatetoTasks: () -> Unit = {},
     onNavigatetoShop: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val selectedPet = uiState.selectedPets
+    val context = LocalContext.current
+    var showConfirmDialog by remember { mutableStateOf(false) }
+    var pendingPurchase by remember { mutableStateOf<(() -> Unit)?>(null) }
+
+    LaunchedEffect(Unit) {
+        delay(5000)
+        println("Баланс в магазине: ${uiState.coins}")
+    }
+
+    fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun showConfirmDialogForPurchase(purchase: () -> Unit) {
+        pendingPurchase = purchase
+        showConfirmDialog = true
+    }
 
     Column(
         modifier = Modifier
@@ -58,49 +73,7 @@ fun GeneralScreen(
             .background(SignupBackground)
     ) {
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp, vertical = 12.dp),
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.pixi),
-                    contentDescription = "Pixi logo",
-                    modifier = Modifier.size(80.dp, 32.dp)
-                )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    Text(
-                        text = "150",
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Black
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.money),
-                        contentDescription = "Currency",
-                        modifier = Modifier.size(50.dp)
-                    )
-                }
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.diamond),
-                    contentDescription = "Diamond",
-                    modifier = Modifier.size(40.dp)
-                )
-            }
-        }
+        ShopTopBar(coins = uiState.coins)
 
         Box(
             modifier = Modifier
@@ -113,174 +86,87 @@ fun GeneralScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(0.dp)
             ) {
-                Image(
-                    painter = painterResource(
-                        id = if (selectedPet == SelectedPet.LAMB) R.drawable.barash else R.drawable.cat
-                    ),
-                    contentDescription = if (selectedPet == SelectedPet.LAMB) "Lamb" else "Cat",
-                    modifier = Modifier
-                        .padding(bottom = 16.dp)
-                        .size(364.dp, 321.dp)
-                )
+
+                AnimatedPetImage(selectedPet = selectedPet)
+                Spacer(modifier = Modifier.height(16.dp))
+
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalAlignment = Alignment.Top
                 ) {
+
+                    PetCardLamb(
+                        isSelected = selectedPet == SelectedPet.LAMB,
+                        coins = uiState.coins,
+                        onSelect = { viewModel.selectLamb() },
+                        onPurchase = { viewModel.purchaseLamb() },
+                        onShowConfirmDialog = ::showConfirmDialogForPurchase,
+                        onShowToast = ::showToast
+                    )
+
+
+                    PetCardCat(
+                        isSelected = selectedPet == SelectedPet.CAT,
+                        coins = uiState.coins,
+                        onSelect = { viewModel.selectCat() },
+                        onPurchase = { viewModel.purchaseCat() },
+                        onShowConfirmDialog = ::showConfirmDialogForPurchase,
+                        onShowToast = ::showToast
+                    )
+
+
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        GeneralChip(text = "Персонажи", onClick = {})
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Box(
-                            modifier = Modifier
-                                .height(93.dp)
-                                .clickable { viewModel.selectedLamb() },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.icon_barash),
-                                contentDescription = "Lamb",
-                                modifier = Modifier.size(93.dp, 74.dp)
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(4.dp))
-                        PetButton(
-                            text = if (selectedPet == SelectedPet.LAMB) "Выбрано" else "50",
-                            selected = selectedPet == SelectedPet.LAMB,
-                            currencyIcon = selectedPet != SelectedPet.LAMB,
-                            onClick = { viewModel.selectedLamb() }
+                        GeneralChip(
+                            text = stringResource(R.string.accessories),
+                            onClick = { }
                         )
-                    }
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        GeneralChip(text = "Одежда", onClick = {})
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Box(
-                            modifier = Modifier
-                                .size(93.dp)
-                                .clickable { viewModel.selectedCat() },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.icon_cat),
-                                contentDescription = "Cat",
-                                modifier = Modifier.size(93.dp)
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(4.dp))
-                        PetButton(
-                            text = if (selectedPet == SelectedPet.CAT) "Выбрано" else "100",
-                            selected = selectedPet == SelectedPet.CAT,
-                            currencyIcon = selectedPet != SelectedPet.CAT,
-                            onClick = { viewModel.selectedCat() }
-                        )
-                    }
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        GeneralChip(text = "Аксессуары", onClick = {})
                     }
                 }
             }
         }
-
 
         BottomBar(
             onNavigatetoSettings = onNavigatetoSettings,
             onNavigatetoTasks = onNavigatetoTasks,
             onNavigatetoShop = onNavigatetoShop
         )
-    }
-}
 
-@Preview(showBackground = true)
-@Composable
-private fun GeneralScreenPreview() {
-    GeneralScreen()
-}
-
-@Composable
-private fun PetButton(
-    text: String,
-    selected: Boolean,
-    currencyIcon: Boolean = false,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = modifier
-            .width(63.dp)
-            .height(23.dp)
-            .clickable(onClick = onClick)
-            .background(
-                color = if (selected) Color.White else PetButtonOrangeBg,
-                shape = RoundedCornerShape(12.dp)
+        if (showConfirmDialog) {
+            ConfirmPurchaseDialog(
+                onConfirm = {
+                    pendingPurchase?.invoke()
+                    showConfirmDialog = false
+                    pendingPurchase = null
+                },
+                onDismiss = {
+                    showConfirmDialog = false
+                    pendingPurchase = null
+                }
             )
-            .then(
-                if (selected)
-                    Modifier.border(
-                        width = 2.dp,
-                        color = OrangeContinue,
-                        shape = RoundedCornerShape(12.dp)
-                    )
-                else Modifier
-            )
-            .padding(horizontal = 4.dp, vertical = 2.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxHeight(),
-            //.padding(bottom = 2.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = text,
-                fontSize = 10.sp,
-                color = Color.Black,
-            )
-            if (currencyIcon) {
-                Spacer(modifier = Modifier.width(2.dp))
-                Image(
-                    painter = painterResource(id = R.drawable.money),
-                    contentDescription = null,
-                    modifier = Modifier.width(25.dp)
-                        .height(37.dp)
-                )
-            }
         }
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
-private fun GeneralChip(
-    text: String,
-    onClick: () -> Unit,
+fun AnimatedPetImage(
+    selectedPet: SelectedPet,
     modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = modifier
-            .width(110.dp)
-            .height(35.dp)
-            .clickable(onClick = onClick)
-            .background(
-                color = Color.White,
-                shape = RoundedCornerShape(8.dp)
-            )
-            .border(
-                width = 2.dp,
-                color = OrangeContinue,
-                shape = RoundedCornerShape(8.dp)
-            )
-            .padding(horizontal = 8.dp, vertical = 6.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = text,
-            fontSize = 12.sp,
-            color = Color.Black
+    AnimatedContent(
+        targetState = selectedPet,
+        transitionSpec = {
+            fadeIn() with fadeOut() using SizeTransform(clip = true)
+        }
+    ) { pet ->
+        Image(
+            painter = painterResource(
+                id = if (pet == SelectedPet.LAMB) R.drawable.barash else R.drawable.cat
+            ),
+            contentDescription = if (pet == SelectedPet.LAMB) stringResource(R.string.lamb) else stringResource(R.string.cat),
+            modifier = modifier.size(364.dp, 321.dp)
         )
     }
 }

@@ -21,6 +21,8 @@ room = "2.6.1"
 
 gmsVersion = "4.4.4"
 bomVersion = "34.9.0"
+runtime = "1.10.6"
+foundation = "1.10.6"
 
 [libraries]
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore"}
@@ -45,6 +47,8 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 
 
 [plugins]
