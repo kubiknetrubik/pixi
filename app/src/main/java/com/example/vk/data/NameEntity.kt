@@ -10,5 +10,6 @@ data class NameEntity(
     val description: String,
     val isCompleted: Boolean = false,
     val cost: Int = 0,
-    val updatedAt: Long = System.currentTimeMillis()
+    val updatedAt: Long = System.currentTimeMillis(),
+    val isRewardClaimed: Boolean = false
 )

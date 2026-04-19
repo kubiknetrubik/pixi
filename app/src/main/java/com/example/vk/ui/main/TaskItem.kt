@@ -14,6 +14,10 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -28,13 +32,17 @@ import com.example.vk.ui.theme.OrangePrimary
 fun TaskItem(
     task: Task,
     onToggle: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    onEdit: () -> Unit
 ) {
+    var showDescriptionDialog by remember { mutableStateOf(value=false) }
+
     Row(
         modifier = Modifier
             .border(2.dp, OrangePrimary, RoundedCornerShape(10.dp))
             .height(53.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable { onEdit() },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(modifier = Modifier.width(4.dp))
@@ -46,6 +54,14 @@ fun TaskItem(
                 uncheckedColor = OrangePrimary
             )
         )
+        if (task.description.isNotBlank()) {
+            Text(
+                text = "📄",
+                fontSize = 16.sp,
+                modifier = Modifier.clickable { showDescriptionDialog = true }
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+        }
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = task.title,
@@ -57,11 +73,13 @@ fun TaskItem(
             fontSize = 15.sp
         )
         Spacer(modifier = Modifier.width(4.dp))
+
         Image(
             painter = painterResource(R.drawable.money),
             contentDescription = null,
             modifier = Modifier.size(24.dp)
         )
+
         Spacer(modifier = Modifier.width(8.dp))
         Image(
             painter = painterResource(R.drawable.ic_delete),
@@ -74,4 +92,13 @@ fun TaskItem(
         Spacer(modifier = Modifier.width(8.dp))
     }
     Spacer(modifier = Modifier.height(10.dp))
+
+    if (showDescriptionDialog) {
+        DescriptionDialog(
+            title = task.title,
+            description = task.description,
+            cost = task.cost,
+            onDismiss = { showDescriptionDialog = false }
+        )
+    }
 }

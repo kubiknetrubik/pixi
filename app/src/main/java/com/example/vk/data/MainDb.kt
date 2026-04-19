@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase
     entities = [
         NameEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class MainDb: RoomDatabase() {
@@ -20,8 +20,9 @@ abstract class MainDb: RoomDatabase() {
             return Room.databaseBuilder(
                 context,
                 MainDb::class.java,
-                "test.db"
-            ).build()
+                "test.db")
+                    .fallbackToDestructiveMigration()
+                    .build()
         }
     }
 }

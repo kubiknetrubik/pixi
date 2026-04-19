@@ -15,9 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -33,14 +30,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.vk.R
+import com.example.vk.datacontrol.Task
 import com.example.vk.ui.components.bars.BottomBar
 import com.example.vk.ui.general.SelectedPet
 import com.example.vk.ui.general.SelectedPetHolder
+import com.example.vk.ui.main.components.TopBarSection
+import com.example.vk.ui.main.components.TasksListSection
 import com.example.vk.ui.theme.OrangePrimary
 import com.example.vk.ui.theme.SignupBackground
 
@@ -53,7 +52,20 @@ fun FirstEntryScreen(
     val state by vm.uiState.collectAsState()
     val snackbarMessage by vm.snackbarMessage.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
+    val balance by vm.balance.collectAsState()
+
     var showAddNoteDialog by remember { mutableStateOf(false) }
+    var editingTask by remember { mutableStateOf<Task?>(null) }
+    var showMotivationDialog by remember { mutableStateOf(false) }
+
+    val completedCount = (state as? TasksState.Success)?.completedCount ?: 0
+    val totalCount = (state as? TasksState.Success)?.totalCount ?: 0
+    val selectedPet by SelectedPetHolder.selected.collectAsState(initial = SelectedPet.LAMB)
+    val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+    LaunchedEffect(Unit) {
+        showMotivationDialog = true
+    }
 
     LaunchedEffect(snackbarMessage) {
         snackbarMessage?.let { msg ->
@@ -62,101 +74,69 @@ fun FirstEntryScreen(
         }
     }
 
-    val configuration = LocalConfiguration.current
-    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-    val selectedPet by SelectedPetHolder.selected.collectAsState(initial = SelectedPet.LAMB)
 
-    val petDrawable = if (selectedPet == SelectedPet.LAMB) R.drawable.barash else R.drawable.cat
-    val petContentDescription = if (selectedPet == SelectedPet.LAMB) "Lamb" else "Cat"
-
-    if (isLandscape) {
-        Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (isLandscape) {
             Row(modifier = Modifier.fillMaxSize()) {
                 Column(
                     modifier = Modifier.fillMaxHeight(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Image(
-                        painter = painterResource(id = petDrawable),
-                        contentDescription = petContentDescription,
+                    TopBarSection(balance, completedCount, totalCount)
+
+                    PetSection(
+                        selectedPet = selectedPet,
                         modifier = Modifier
                             .padding(top = 4.dp, bottom = 16.dp)
-                            .size(364.dp, 321.dp)
                     )
+
                     Spacer(modifier = Modifier.weight(1f))
+
                     BottomBar(
                         onNavigatetoSettings = onNavigatetoSettings,
                         onNavigatetoShop = onNavigatetoShop
                     )
                     Spacer(modifier = Modifier.height(16.dp))
+
+                    FloatingActionButton(
+                        onClick = { showAddNoteDialog = true },
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(24.dp),
+                        containerColor = OrangePrimary,
+                        contentColor = Color.White
+                    ) {
+                        Text("+", fontSize = 24.sp)
+                    }
                 }
+
                 Spacer(modifier = Modifier.width(150.dp))
+
                 Box(
                     modifier = Modifier
                         .padding(start = 24.dp)
                         .height(500.dp)
                         .width(380.dp)
                 ) {
-                    when (state) {
-                        is TasksState.Loading -> {
-                            CircularProgressIndicator(
-                                modifier = Modifier.align(Alignment.Center)
-                            )
-                        }
-                        is TasksState.Success -> {
-                            val tasks = (state as TasksState.Success).tasks
-                            if (tasks.isEmpty()) {
-                                Text(
-                                    text = "Нет заметок. Создайте первую.",
-                                    modifier = Modifier.align(Alignment.Center),
-                                    color = colorResource(R.color.error)
-                                )
-                            } else {
-                                Spacer(modifier = Modifier.height(20.dp))
-                                LazyColumn(
-                                    modifier = Modifier
-                                        .height(500.dp)
-                                        .width(380.dp)
-                                ) {
-                                    items(tasks) { task ->
-                                        TaskItem(
-                                            task = task,
-                                            onToggle = { vm.toggleNoteCompleted(task.id) },
-                                            onDelete = { vm.deleteNote(task.id) }
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                        is TasksState.Error -> {
-                            Text(
-                                text = (state as TasksState.Error).message,
-                                modifier = Modifier.align(Alignment.Center),
-                                color = colorResource(R.color.error)
-                            )
-                        }
-                    }
+                    TasksListSection(
+                        state = state,
+                        onToggle = vm::toggleNoteCompleted,
+                        onDelete = vm::deleteNote,
+                        onEdit = { editingTask = it },
+                        modifier = Modifier.fillMaxSize()
+                    )
                 }
             }
-            FloatingActionButton(
-                onClick = { showAddNoteDialog = true },
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(24.dp),
-                containerColor = OrangePrimary,
-                contentColor = Color.White
-            ) {
-                Text("+", fontSize = 24.sp)
-            }
-        }
-    } else {
-        Box(modifier = Modifier.fillMaxSize()) {
+        } else {
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(SignupBackground),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                TopBarSection(balance, completedCount, totalCount)
+
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -167,85 +147,47 @@ fun FirstEntryScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Image(
-                            painter = painterResource(id = petDrawable),
-                            contentDescription = petContentDescription,
-                            modifier = Modifier
-                                .padding(bottom = 16.dp)
-                                .size(364.dp, 321.dp)
+                        PetSection(
+                            selectedPet = selectedPet,
+                            modifier = Modifier.padding(bottom = 16.dp)
                         )
                         Spacer(modifier = Modifier.height(24.dp))
-                        Box(
+
+                        TasksListSection(
+                            state = state,
+                            onToggle = vm::toggleNoteCompleted,
+                            onDelete = vm::deleteNote,
+                            onEdit = { editingTask = it },
                             modifier = Modifier
                                 .height(280.dp)
                                 .width(380.dp)
-                        ) {
-                            when (state) {
-                                is TasksState.Loading -> {
-                                    CircularProgressIndicator(
-                                        modifier = Modifier.align(Alignment.Center)
-                                    )
-                                }
-                                is TasksState.Success -> {
-                                    val tasks = (state as TasksState.Success).tasks
-                                    if (tasks.isEmpty()) {
-                                        Text(
-                                            text = "Нет заметок. Создайте первую.",
-                                            modifier = Modifier
-                                                .align(Alignment.Center)
-                                                .padding(16.dp),
-                                            color = colorResource(R.color.error)
-                                        )
-                                    } else {
-                                        Spacer(modifier = Modifier.height(20.dp))
-                                        LazyColumn(
-                                            modifier = Modifier
-                                                .height(270.dp)
-                                                .width(380.dp)
-                                        ) {
-                                            items(tasks) { task ->
-                                                TaskItem(
-                                                    task = task,
-                                                    onToggle = { vm.toggleNoteCompleted(task.id) },
-                                                    onDelete = { vm.deleteNote(task.id) }
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-                                is TasksState.Error -> {
-                                    Text(
-                                        text = (state as TasksState.Error).message,
-                                        modifier = Modifier.align(Alignment.Center),
-                                        color = colorResource(R.color.error)
-                                    )
-                                }
-                            }
-                        }
+                        )
                     }
                 }
+
+                FloatingActionButton(
+                    onClick = { showAddNoteDialog = true },
+                    modifier = Modifier.padding(top = 16.dp),
+                    containerColor = OrangePrimary,
+                    contentColor = Color.White
+                ) {
+                    Text("+", fontSize = 24.sp)
+                }
+
                 BottomBar(
                     onNavigatetoSettings = onNavigatetoSettings,
                     onNavigatetoShop = onNavigatetoShop
                 )
                 Spacer(modifier = Modifier.height(16.dp))
             }
-            FloatingActionButton(
-                onClick = { showAddNoteDialog = true },
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(24.dp),
-                containerColor = OrangePrimary,
-                contentColor = Color.White
-            ) {
-                Text("+", fontSize = 24.sp)
-            }
-            SnackbarHost(
-                hostState = snackbarHostState,
-                modifier = Modifier.align(Alignment.BottomCenter)
-            )
         }
+
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
+
 
     if (showAddNoteDialog) {
         AddNoteDialog(
@@ -256,4 +198,36 @@ fun FirstEntryScreen(
             }
         )
     }
+
+    if (editingTask != null) {
+        AddNoteDialog(
+            onDismiss = { editingTask = null },
+            onSave = { title, description, cost ->
+                vm.updateNote(editingTask!!.id, title, description, cost)
+                editingTask = null
+            }
+        )
+    }
+
+    if (showMotivationDialog) {
+        MotivationDialog(
+            onDismiss = { showMotivationDialog = false }
+        )
+    }
+}
+
+
+@Composable
+fun PetSection(
+    selectedPet: SelectedPet,
+    modifier: Modifier = Modifier
+) {
+    val petDrawable = if (selectedPet == SelectedPet.LAMB) R.drawable.barash else R.drawable.cat
+    val petContentDescription = if (selectedPet == SelectedPet.LAMB) "Lamb" else "Cat"
+
+    Image(
+        painter = painterResource(id = petDrawable),
+        contentDescription = petContentDescription,
+        modifier = modifier.size(364.dp, 321.dp)
+    )
 }

@@ -20,15 +20,19 @@ import com.example.vk.data.NoteRepository
 import com.example.vk.ui.general.GeneralScreen
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import com.example.vk.data.BalanceRepository
 import com.example.vk.datacontrol.AuthState
 import com.example.vk.datacontrol.AuthViewModel
 import com.example.vk.ui.changepassword.ChangePasswordScreen
+import com.example.vk.ui.general.GeneralViewModel
 import com.example.vk.ui.main.TaskViewModel
 import com.example.vk.ui.registration.SignInEmailScreen
 
-
 @Composable
-fun NavGraph(navController: NavHostController) {
+fun NavGraph(navController: NavHostController,
+             balanceRepository: BalanceRepository) {
+
     val authvm: AuthViewModel = viewModel(
         initializer = { AuthViewModel()}
     )
@@ -82,7 +86,13 @@ fun NavGraph(navController: NavHostController) {
 
 
         composable(route = AppScreens.GeneralScreen.route) {
+            val generalViewModel: GeneralViewModel = viewModel(
+                initializer = {
+                    GeneralViewModel(balanceRepository)
+                }
+            )
             GeneralScreen(
+                viewModel = generalViewModel,
                 onNavigatetoSettings = { navController.navigate(AppScreens.SettingsScreen.route) },
                 onNavigatetoTasks = { navController.navigate(AppScreens.FirstEntryScreen.route) },
                 onNavigatetoShop = { navController.navigate(AppScreens.GeneralScreen.route) }
@@ -129,7 +139,7 @@ fun NavGraph(navController: NavHostController) {
             val vm: TaskViewModel = viewModel(
                 initializer = {
                     val dao = MainDb.createDataBase(context).dao
-                    TaskViewModel(NoteRepository(dao))
+                    TaskViewModel(NoteRepository(dao, balanceRepository ), balanceRepository)
                 }
             )
             FirstEntryScreen(
@@ -144,7 +154,7 @@ fun NavGraph(navController: NavHostController) {
             val vm: TaskViewModel = viewModel(
                 initializer = {
                     val dao = MainDb.createDataBase(context).dao
-                    TaskViewModel(NoteRepository(dao))
+                    TaskViewModel(NoteRepository(dao, balanceRepository ), balanceRepository)
                 }
             )
             val login = backStackEntry.arguments?.getString("login")
@@ -175,4 +185,3 @@ fun NavGraph(navController: NavHostController) {
         }
     }
 }
-
